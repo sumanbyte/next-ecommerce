@@ -1,0 +1,23 @@
+import Image from "next/image"
+
+type PropType = {
+    title: string;
+    img: string;
+    textColor: string;
+}
+
+const HeroContent = (props: PropType) => {
+    return (
+        <>
+            <div className={`absolute top-1 sm:top-10 left-1 sm:left-10 ${props.textColor} font-montserrat`}>
+                <h1 className="text-2xl sm:text-4xl md:text-5xl font-extrabold ">{props.title}</h1>
+                <p className=' text-xs sm:text-xl md:text-3xl my-1 md:my-2'>Festive Sale !</p>
+                <p className='font-extrabold my-1 md:my-2 text-xs sm:text-sm md:text-2xl'>Up to 60% Discount</p>
+                <button className='mt-0 sm:mt-2 md:mt-5 px-2 sm:px-5 md:px-20 py-1 sm:py-2 md:py-3 text-[10px] sm:text-sm md:text-lg bg-yellow-400 uppercase font-extrabold'>Shop the Sale</button>
+            </div>
+            <Image className='m-auto' src={`/images/herosection/${props.img}`} width={1600} height={900} alt="" />
+        </>
+    )
+}
+
+export default HeroContent
