@@ -1,0 +1,23 @@
+/* CustomScrollbar.module.css */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+    height: 1px;
+    opacity: 0.1;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #6b7280;
+    border-radius: 4px;
+    opacity: 0.5; /* Reduce opacity for a more subtle appearance */
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #f3f4f6;
+    border-radius: 4px;
+    opacity: 0.5; /* Reduce opacity for a more subtle appearance */
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+  

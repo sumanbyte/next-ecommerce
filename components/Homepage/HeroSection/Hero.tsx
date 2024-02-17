@@ -1,29 +1,31 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import HeroContent from './HeroContent'
 
 const Hero = () => {
-  const myObj = [
-    {
-      title: 'Premium Electronics',
-      img: 'hero1.jpg',
-      textColor: 'text-white'
-    },
-    {
-      title: 'Newest Clothing',
-      img: 'hero2.jpg',
-      textColor: 'text-white'
-    },
-    {
-      title: 'Gift for Kids',
-      img: 'hero3.jpg',
-      textColor: 'text-black'
-    },
-    {
-      title: 'Outstanding Artworks',
-      img: 'hero4.jpg',
-      textColor: 'text-black'
-    },
-  ]
+  const myObj = useMemo(()=> {
+    return [
+      {
+        title: 'Premium Electronics',
+        img: 'hero1.jpg',
+        textColor: 'text-primary-100'
+      },
+      {
+        title: 'Newest Clothing',
+        img: 'hero2.jpg',
+        textColor: 'text-primary-100'
+      },
+      {
+        title: 'Gift for Kids',
+        img: 'hero3.jpg',
+        textColor: 'text-black'
+      },
+      {
+        title: 'Outstanding Artworks',
+        img: 'hero4.jpg',
+        textColor: 'text-black'
+      },
+    ]
+  }, [])
 
   const [currentIndex, setCurrentIndex] = useState(0)
 
@@ -37,7 +39,7 @@ const Hero = () => {
 
     return () => clearInterval(interval);
 
-  }, [currentIndex])
+  }, [currentIndex, myObj.length])
 
 
   const {title, img, textColor} = myObj[currentIndex]

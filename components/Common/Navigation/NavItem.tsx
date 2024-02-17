@@ -1,4 +1,4 @@
-import { Brands, Categories, Collections, Deals_And_Offers, Options, Search, Support } from '../Utilities/NavLinks'
+import { Brands, Categories, Collections, Deals_And_Offers, Options, Search, Support } from '../../Utilities/NavLinks'
 
 interface FunctionObject {
     categories: () => JSX.Element;

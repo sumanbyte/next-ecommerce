@@ -1,7 +1,8 @@
-import Hero from "@/components/HeroSection/Hero";
-import Navbar from "@/components/Navigation/Navbar";
-import Products from "@/components/Products/Products";
-import Navibar from "@/components/Navigation/Navibar";
+import Hero from "@/components/Homepage/HeroSection/Hero";
+import Products from "@/components/Homepage/Products/Products";
+import Features from "@/components/Homepage/Features/Features";
+import Footer from "@/components/Common/Footer/Footer";
+import Head from "next/head";
 
 
 
@@ -9,10 +10,14 @@ export default function Home() {
   
   return (
     <>
-      <Navbar/>
+    <Head>
+      <title>ShopWave - Shop for fun...</title>
+    </Head>
 
       <Hero />
       <Products />
+      <Features />
+      <Footer />
     </>
   )
 }
