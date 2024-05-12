@@ -1,9 +1,7 @@
 import Product from "./Product";
-import { useEffect } from "react";
 import styles from '@/styles/CustomScrollbar.module.css';
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "@/components/Common/Navigation/Navbar";
-import { setProducts, AppDispatch } from "@/redux/entities/products"; // Make sure to import AppDispatch
 import Link from "next/link";
 
 export interface ProductObjectInterface {
@@ -22,16 +20,7 @@ export interface ProductObjectInterface {
 export default function Products() {
     const products = useSelector((state: RootState) => state.products);
     
-    const dispatch = useDispatch<AppDispatch>(); 
-    useEffect(() => {
-        const action: ReturnType<typeof dispatch> = dispatch(setProducts());
-
-        if (action && typeof action === 'object' && 'then' in action) {
-            (action as Promise<any>).then((resolvedAction: any) => {
-                console.log('Thunk resolvedAction: ', resolvedAction);
-            });
-        }
-    }, [dispatch]);
+    
 
     if(products.error){
         return <p>Some Error Occured {products.error}</p>

@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 export default function App({ Component, pageProps }: AppProps) {
 
 
-  return <Provider store={store}>
+  return <Provider store={store}> 
     <Navbar />
     <Component {...pageProps} />
     <ToastContainer

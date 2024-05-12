@@ -13,6 +13,8 @@ import Cart from '../Cart/Cart'
 import { changeNav } from '@/redux/entities/navbar'
 import Category from './Category'
 import { ProductObjectInterface } from '@/components/Homepage/Products/Products';
+import { setProducts, AppDispatch } from "@/redux/entities/products"; // Make sure to import AppDispatch
+
 
 interface NavbarState {
     categories: boolean;
@@ -42,6 +44,17 @@ export default function Navbar() {
     const cartState = useSelector((state: any) => state.cart.items)
     const dispatch = useDispatch();
 
+
+    const dispatchProduct = useDispatch<AppDispatch>();
+    useEffect(() => {
+        const action: ReturnType<typeof dispatchProduct> = dispatchProduct(setProducts());
+
+        if (action && typeof action === 'object' && 'then' in action) {
+            (action as Promise<any>).then((resolvedAction: any) => {
+                console.log('Thunk resolvedAction: ', resolvedAction);
+            });
+        }
+    }, [dispatchProduct]);
 
 
     useEffect(() => {
