@@ -1,13 +1,25 @@
+"use client";
 
-import React from 'react'
-import CheckoutPage from '@/components/CheckoutPage/CheckoutPage'
+import CheckoutPage from '@/components/CheckoutPage/CheckoutPage';
+import AxiosInstance from '@/lib/AxiosInstance';
+import { toast } from 'react-toastify';
 
-const Checkout = () => {
+export default function Checkout() {
+
+    const logout = async ()=> {
+        try{
+            const response = await AxiosInstance.get('/api/auth/logout');
+            toast.success(response.data.message)
+
+        }catch(e:any){
+            toast.error(e.response.data.message);
+        }
+    }
     return (
         <>
             <CheckoutPage />
+            <button className='px-2 py-2 bg-red-500' onClick={logout}>Logout</button>
         </>
-    )
+    );
 }
 
-export default Checkout

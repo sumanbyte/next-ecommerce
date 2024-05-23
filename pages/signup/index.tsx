@@ -1,7 +1,28 @@
+"use client";
+import AxiosInstance from "@/lib/AxiosInstance";
 import Link from "next/link";
+import { ChangeEvent, useState } from "react";
+import { toast } from "react-toastify";
 
 
 export default function SignupPage() {
+    const [data, setData] = useState({name: "", email: "", password: ""});
+
+    const onChange = (e: ChangeEvent<HTMLInputElement>)=> {
+        setData({...data, [e.target.name]: e.target.value})
+    }
+
+    const signup = async (e:any)=> {
+        e.preventDefault();
+        try{
+            const response = await AxiosInstance.post('/api/auth/signup', data);
+            toast.success(response.data.message)
+
+        }catch(e:any){
+            toast.error(e.response.data.message);
+        }
+
+    }
     return (
         <>
 
@@ -14,7 +35,7 @@ export default function SignupPage() {
                 </div>
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                    <form className="space-y-6" action="#" method="POST">
+                    <form className="space-y-6" action="#" onSubmit={signup} method="POST">
                     <div>
                             <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
                                 Name
@@ -26,6 +47,8 @@ export default function SignupPage() {
                                     type="text"
                                     required
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    value={data.name}
+                                    onChange={onChange}
                                 />
                             </div>
                         </div>
@@ -43,6 +66,8 @@ export default function SignupPage() {
                                     autoComplete="email"
                                     required
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    value={data.email}
+                                    onChange={onChange}
                                 />
                             </div>
                         </div>
@@ -66,6 +91,8 @@ export default function SignupPage() {
                                     autoComplete="current-password"
                                     required
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    value={data.password}
+                                    onChange={onChange}
                                 />
                             </div>
                         </div>
