@@ -62,6 +62,8 @@ export default function Navbar() {
     }, []);
 
 
+
+
     const shouldShowNavModal = () => {
 
         return (navbarState.categories || navbarState.brands || navbarState.collections || navbarState.deals_and_offers || navbarState.support || navbarState.options || navbarState.search) && !navbarState.hasMobile;

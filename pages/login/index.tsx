@@ -1,10 +1,12 @@
 import AxiosInstance from "@/lib/AxiosInstance";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
 import { toast } from "react-toastify";
 
 export default function LoginPage() {
     const [data, setData] = useState({ email: "", password: "" })
+    const router = useRouter();
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         setData({ ...data, [e.target.name]: e.target.value })
     }
@@ -14,7 +16,7 @@ export default function LoginPage() {
         try{
             const response = await AxiosInstance.post('/api/auth/login', data);
             toast.success(response.data.message)
-
+            router.push("/checkout");
         }catch(e:any){
             toast.error(e.response.data.message);
         }

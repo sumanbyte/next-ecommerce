@@ -4,7 +4,7 @@ import { connect } from "@/lib/dbConfig/dbConfig";
 import { NextApiRequest, NextApiResponse } from "next";
 import jwt from 'jsonwebtoken'
 
-connect()
+connect();
 export default async function POST(req: NextApiRequest, res: NextApiResponse){
     const {name, email, password} = req.body;
 
