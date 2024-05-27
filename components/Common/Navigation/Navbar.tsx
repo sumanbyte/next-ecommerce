@@ -54,9 +54,6 @@ export default function Navbar() {
     const cartState = useSelector((state: any) => state.cart.items)
     const auth = useSelector((state: any) => state.auth);
     const dispatch = useDispatch();
-
-
-    console.log(auth);
     
 
     const dispatchProduct = useDispatch<AppDispatch>();

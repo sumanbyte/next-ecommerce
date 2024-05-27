@@ -6,7 +6,8 @@ import Link from 'next/link'
 
 export default function Cart() {
     const navbarState = useSelector((state: RootState) => state.navbar);
-    const cartState = useSelector((state: any) => state.cart.items)
+    const cartState = useSelector((state: any) => state.cart.items);
+    const auth = useSelector((state: any) => state.auth);
 
     const dispatch = useDispatch();
 
@@ -34,12 +35,16 @@ export default function Cart() {
                 showCartItems()
             }
             <div>
+                {
+                    auth.isAuthenticated ? 
                 <Link href={'/checkout'}>
                     <button className='bg-primary-700 hover:bg-primary-800 hover:scale-105 active:scale-95 transition text-white px-5 py-2'
                         onClick={() => { dispatch(changeNav({ type: '8' })) }}
 
                     >Checkout</button>
                 </Link>
+                : <p>You need to be logged in for checkout option</p>
+                }
             </div>
         </div>
     )

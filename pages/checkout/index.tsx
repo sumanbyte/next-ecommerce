@@ -1,7 +1,4 @@
-"use client";
-
 import CheckoutPage from '@/components/CheckoutPage/CheckoutPage';
-
 
 export default function Checkout() {
     

@@ -20,7 +20,7 @@ export default function LoginPage() {
             const response = await AxiosInstance.post('/api/auth/login', data);
             dispatch(updateAuthStatus(true));
             toast.success(response.data.message)
-            router.push("/checkout");
+            router.push("/");
         }catch(e:any){
             toast.error(e.response.data.message);
         }

@@ -57,6 +57,9 @@ const CheckoutPage: React.FC = () => {
                     className="px-4 text-2xl rounded-sm"
                   >+</button>
                 </div>
+                <div className="">
+                  <p>$ {(cartItem.price * cartItem.quantity).toFixed(2)}</p>
+                </div>
               </div>
             })
           }

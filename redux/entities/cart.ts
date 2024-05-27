@@ -41,16 +41,10 @@ const slice = createSlice({
         let id = action.payload.productId;
         let updatedProducts = state.items.map((item) => {
           if (item.id == id) {
-            let currentQuantity = item.quantity;
-            if (currentQuantity <= 1) {
-              currentQuantity = 1;
-            } else {
-              currentQuantity--;
-            }
-            return { ...item, quantity: currentQuantity };
+            return { ...item, quantity: item.quantity - 1 };
           }
           return item;
-        });
+        }).filter(item => item.quantity > 0);
 
         state.items = updatedProducts;
         localStorage.setItem("cart", JSON.stringify(state.items));
