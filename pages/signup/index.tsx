@@ -1,13 +1,15 @@
 "use client";
 import AxiosInstance from "@/lib/AxiosInstance";
+import { updateAuthStatus } from "@/redux/entities/auth";
 import Link from "next/link";
 import { ChangeEvent, useState } from "react";
+import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 
 
 export default function SignupPage() {
     const [data, setData] = useState({name: "", email: "", password: ""});
-
+    const dispatch = useDispatch();
     const onChange = (e: ChangeEvent<HTMLInputElement>)=> {
         setData({...data, [e.target.name]: e.target.value})
     }
@@ -16,6 +18,7 @@ export default function SignupPage() {
         e.preventDefault();
         try{
             const response = await AxiosInstance.post('/api/auth/signup', data);
+            dispatch(updateAuthStatus(true));
             toast.success(response.data.message)
 
         }catch(e:any){

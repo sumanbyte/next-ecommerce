@@ -1,13 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
-import navbarReducer from '../entities/navbar'
-import productReducer from '../entities/products'
-import cartReducer from '../entities/cart'
+import navbarReducer from '../entities/navbar';
+import productReducer from '../entities/products';
+import cartReducer from '../entities/cart';
+import authReducer from '../entities/auth';
 
 const store = configureStore({
     reducer: {
         navbar: navbarReducer,
         products: productReducer,
-        cart: cartReducer
+        cart: cartReducer,
+        auth: authReducer
     }
 })
 

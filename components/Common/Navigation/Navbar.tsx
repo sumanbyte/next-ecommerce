@@ -1,3 +1,4 @@
+"use client";
 import { BiCart, BiChevronDown } from 'react-icons/bi'
 import { FiSearch } from 'react-icons/fi'
 import { CgProfile } from 'react-icons/cg'
@@ -14,6 +15,15 @@ import { changeNav } from '@/redux/entities/navbar'
 import Category from './Category'
 import { ProductObjectInterface } from '@/components/Homepage/Products/Products';
 import { setProducts, AppDispatch } from "@/redux/entities/products"; // Make sure to import AppDispatch
+import AxiosInstance from '@/lib/AxiosInstance'
+import { startAuth, updateAuthStatus } from '@/redux/entities/auth'
+import { toast } from 'react-toastify'
+import Spinner from '@/components/Spinner/Spinner'
+import { IoLogOutOutline } from "react-icons/io5";
+import { AiOutlineLoading } from "react-icons/ai";
+import { useRouter } from 'next/router'
+
+
 
 
 interface NavbarState {
@@ -42,8 +52,12 @@ export interface RootState {
 export default function Navbar() {
     const navbarState = useSelector((state: RootState) => state.navbar);
     const cartState = useSelector((state: any) => state.cart.items)
+    const auth = useSelector((state: any) => state.auth);
     const dispatch = useDispatch();
 
+
+    console.log(auth);
+    
 
     const dispatchProduct = useDispatch<AppDispatch>();
     useEffect(() => {
@@ -61,8 +75,31 @@ export default function Navbar() {
         dispatch(setCart({ items: JSON.parse(localStorage.getItem('cart')!) || [] }));
     }, []);
 
+    useEffect(() => {
+        dispatch(startAuth());
+        AxiosInstance.get("/api/auth/verify").then(res => {
+            dispatch(updateAuthStatus(res.data.isAuthenticated))
+        }).catch(e => {
+            dispatch(updateAuthStatus(false));
+        })
 
 
+    }, []);
+
+
+    const router = useRouter();
+
+    const logout = async ()=> {
+        try{
+            const response = await AxiosInstance.get('/api/auth/logout');
+            dispatch(updateAuthStatus(false));
+            toast.success(response.data.message)
+            router.push("/");
+
+        }catch(e:any){
+            toast.error(e.response.data.message);
+        }
+    }
 
     const shouldShowNavModal = () => {
 
@@ -119,9 +156,16 @@ export default function Navbar() {
                                     <span className='text-sm font-light font-montserrat hidden lg:block'>Search</span>
                                 </div>
                                 <div className='hover:text-red-700 duration-500 cursor-pointer hidden md:block'>
-                                    <Link href={'/login'}>
-                                        <CgProfile className='text-2xl font-bold' />
-                                    </Link>
+                                    {
+                                        auth.isLoading ? <AiOutlineLoading /> :
+                                            auth.isAuthenticated ? <div onClick={logout} title="Logout">
+                                                <IoLogOutOutline className='text-2xl font-bold' />
+                                            </div> :
+                                                <Link href={'/login'}>
+                                                    <CgProfile className='text-2xl font-bold' />
+                                                </Link>
+
+                                    }
                                 </div>
                                 <div className='hover:text-red-700 duration-500 cursor-pointer mr-4' onClick={() => {
                                     dispatch(changeNav({ type: '8' }))
