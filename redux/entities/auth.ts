@@ -4,13 +4,10 @@ const slice = createSlice({
     name: "auth",
     initialState: {
         isAuthenticated: false,
-        isLoading: false,
+        isLoading: true,
         error: ""
     },
     reducers: {
-        startAuth(state){
-            state.isLoading = true;
-        },
         updateAuthStatus(state, action){
             state.isLoading = false;
             state.isAuthenticated = action.payload;
@@ -20,6 +17,6 @@ const slice = createSlice({
     }
 })
 
-export const {startAuth, updateAuthStatus} = slice.actions;
+export const { updateAuthStatus} = slice.actions;
 
 export default slice.reducer;

@@ -1,48 +1,50 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import store from "../store/store";
 
-const initialState = {
+interface ProductState {
+  productsArray: any[];
+  loading: boolean;
+  error: string | null;
+}
+
+const initialState: ProductState = {
   productsArray: [],
   loading: false,
   error: null,
 };
 
+
 const slice = createSlice({
-  initialState: initialState,
-  reducers: {
-    setProductsStart: (state, action) => {
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(fetchProducts.pending, (state)=> {
       state.loading = true;
-    },
-    setProductsSuccess: (state, action) => {
+    })
+    .addCase(fetchProducts.fulfilled, (state, action)=> {
       state.loading = false;
-      state.productsArray = action.payload;
-    },
-    setProductsFailure: (state, action) => {
+      state.productsArray = action.payload
+    })
+    .addCase(fetchProducts.rejected, (state, action)=> {
       state.loading = false;
-      state.error = action.payload;
-    },
+      state.error = action.error.message || "Something went wrong";
+    })
   },
   name: "product",
 });
 
-export const { setProductsStart, setProductsSuccess, setProductsFailure } =
-  slice.actions;
 
-export const setProducts = createAsyncThunk(
-  "product/setProducts",
-  async (_, { dispatch }) => {
-    try {
-      dispatch(setProductsStart(initialState));
-      const response = await fetch("https://fakestoreapi.com/products");
-      const data = await response.json();
-      dispatch(setProductsSuccess(data));
-    } catch (e: any) {
-      const error: string = e.message;
-      setProductsFailure(error);
+
+export const fetchProducts = createAsyncThunk(
+  'product/fetchProducts', 
+  async ()=> {
+    try{
+      const response = await fetch("http://localhost:3000/api/products");
+      return response.json();
+    }catch(err){
+      console.log(err)
     }
   }
-);
+)
 
-export type AppDispatch = typeof store.dispatch;
 
 export default slice.reducer;

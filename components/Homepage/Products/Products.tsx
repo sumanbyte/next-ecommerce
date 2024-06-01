@@ -21,7 +21,6 @@ export default function Products() {
     const products = useSelector((state: RootState) => state.products);
 
 
-
     if (products.error) {
         return <p>Some Error Occured {products.error}</p>
     }

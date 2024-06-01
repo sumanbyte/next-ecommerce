@@ -5,7 +5,7 @@ import { CgProfile } from 'react-icons/cg'
 import { AiOutlineMenu } from 'react-icons/ai'
 import { RxCross1 } from 'react-icons/rx'
 import { Brands, Categories, Collections, Deals_And_Offers, Options, Support } from '../../Utilities/NavLinks';
-import cart, { setCart } from '@/redux/entities/cart'
+import { setCart } from '@/redux/entities/cart'
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import Link from 'next/link'
@@ -14,16 +14,14 @@ import Cart from '../Cart/Cart'
 import { changeNav } from '@/redux/entities/navbar'
 import Category from './Category'
 import { ProductObjectInterface } from '@/components/Homepage/Products/Products';
-import { setProducts, AppDispatch } from "@/redux/entities/products"; // Make sure to import AppDispatch
 import AxiosInstance from '@/lib/AxiosInstance'
-import { startAuth, updateAuthStatus } from '@/redux/entities/auth'
+import { updateAuthStatus } from '@/redux/entities/auth'
 import { toast } from 'react-toastify'
 import Spinner from '@/components/Spinner/Spinner'
 import { IoLogOutOutline } from "react-icons/io5";
-import { AiOutlineLoading } from "react-icons/ai";
 import { useRouter } from 'next/router'
-
-
+import {fetchProducts} from "@/redux/entities/products";
+import {AppDispatch} from "@/redux/store/store"
 
 
 interface NavbarState {
@@ -53,19 +51,12 @@ export default function Navbar() {
     const navbarState = useSelector((state: RootState) => state.navbar);
     const cartState = useSelector((state: any) => state.cart.items)
     const auth = useSelector((state: any) => state.auth);
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
     
 
-    const dispatchProduct = useDispatch<AppDispatch>();
     useEffect(() => {
-        const action: ReturnType<typeof dispatchProduct> = dispatchProduct(setProducts());
-
-        if (action && typeof action === 'object' && 'then' in action) {
-            (action as Promise<any>).then((resolvedAction: any) => {
-                console.log('Thunk resolvedAction: ', resolvedAction);
-            });
-        }
-    }, [dispatchProduct]);
+       dispatch(fetchProducts())
+    }, []);
 
 
     useEffect(() => {
@@ -73,7 +64,6 @@ export default function Navbar() {
     }, []);
 
     useEffect(() => {
-        dispatch(startAuth());
         AxiosInstance.get("/api/auth/verify").then(res => {
             dispatch(updateAuthStatus(res.data.isAuthenticated))
         }).catch(e => {
@@ -111,7 +101,6 @@ export default function Navbar() {
     }
 
     const [menu, showMenu] = useState(true);
-
 
 
     return (
@@ -154,8 +143,8 @@ export default function Navbar() {
                                 </div>
                                 <div className='hover:text-red-700 duration-500 cursor-pointer hidden md:block'>
                                     {
-                                        auth.isLoading ? <AiOutlineLoading /> :
-                                            auth.isAuthenticated ? <div onClick={logout} title="Logout">
+                                        auth.isLoading && !auth.isAuthenticated ? <Spinner /> :
+                                            auth.isAuthenticated && !auth.isLoading ? <div onClick={logout} title="Logout">
                                                 <IoLogOutOutline className='text-2xl font-bold' />
                                             </div> :
                                                 <Link href={'/login'}>
