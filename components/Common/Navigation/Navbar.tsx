@@ -20,9 +20,7 @@ import { toast } from 'react-toastify'
 import Spinner from '@/components/Spinner/Spinner'
 import { IoLogOutOutline } from "react-icons/io5";
 import { useRouter } from 'next/router'
-import {fetchProducts} from "@/redux/entities/products";
 import {AppDispatch} from "@/redux/store/store"
-import { useGetCartsQuery } from '@/redux/apis/cartApiSlice';
 
 
 interface NavbarState {
@@ -55,11 +53,6 @@ export default function Navbar() {
 
     const dispatch = useDispatch<AppDispatch>();
     
-
-    useEffect(() => {
-       dispatch(fetchProducts())
-    }, []);
-
 
     useEffect(() => {
         dispatch(setCart({ items: JSON.parse(localStorage.getItem('cart')!) || [] }));
