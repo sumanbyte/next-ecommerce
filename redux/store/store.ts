@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { api } from '../apis/cartApiSlice';
+import { cartsApi } from '../apis/cartApiSlice';
+import { productsApi } from '../apis/productsApiSlice';
 import navbarReducer from '../entities/navbar';
 import productReducer from '../entities/products';
 import cartReducer from '../entities/cart';
@@ -11,12 +12,11 @@ const store = configureStore({
         products: productReducer,
         cart: cartReducer,
         auth: authReducer,
-        [api.reducerPath]: api.reducer
+        [cartsApi.reducerPath]: cartsApi.reducer,
+        [productsApi.reducerPath]: productsApi.reducer
     },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(api.middleware)
+    middleware: (getDefaultMiddleware) => [...getDefaultMiddleware(), cartsApi.middleware, productsApi.middleware]
 });
-
-
 
 export type AppDispatch = typeof store.dispatch;
 export default store

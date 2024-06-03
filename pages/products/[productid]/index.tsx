@@ -1,31 +1,32 @@
-import { RootState } from "@/components/Common/Navigation/Navbar";
 import { usePathname } from "next/navigation";
-import { useSelector } from "react-redux";
 import { useMemo } from "react";
 import { ProductObjectInterface } from "@/components/Homepage/Products/Products";
-import IndividualProduct from '@/components/IndividualProduct/Product'
+import IndividualProduct from '@/components/IndividualProduct/Product';
+import { useGetProductsQuery } from "@/redux/apis/productsApiSlice";
+
+
+
 
 export default function ProductPage() {
     const pathname: any = usePathname();
+    const {data: products, error, isLoading}= useGetProductsQuery({});
+    
 
-    const products = useSelector((state: RootState) => state.products);
     const product: ProductObjectInterface | undefined = useMemo(() => {
         if (pathname) {
-            const number = Number(pathname.split('/')[2]) - 1;
-            return products.productsArray[number];
+            const number = Number(pathname.split('/')[2]);
+            if(products && products.length > 0)
+            return products.find((product:any) => product.id === number)
         }
-    }, [products.productsArray, pathname])
+    }, [products, pathname])
 
 
 
-
-
-
-    if (products.error) {
+    if (error) {
         return <p className="text-center">Some Error Occured {products.error}</p>
     }
 
-    if (products.loading) {
+    if (isLoading) {
         return <p className="text-center">Loading...</p>
     }
 

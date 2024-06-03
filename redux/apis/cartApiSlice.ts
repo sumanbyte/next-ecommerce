@@ -1,8 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-export const api = createApi({
+export const cartsApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000"}),
   tagTypes: ["Carts"],
+  reducerPath: "cartsApi",
   endpoints: (builder)=> ({
     
     getCarts: builder.query({
@@ -11,6 +12,14 @@ export const api = createApi({
         transformResponse: ((response: {carts: any}) => response.carts)
     }),
 
+    addToCart: builder.mutation({
+      query: (data) => ({
+        url: "/api/user/cart",
+        method: "POST",
+        body: data
+      }),
+      invalidatesTags: ["Carts"]
+    })
     
 
 
@@ -20,4 +29,4 @@ export const api = createApi({
 
 export const {
   useGetCartsQuery
-} = api;
+} = cartsApi;
