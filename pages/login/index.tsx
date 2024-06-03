@@ -16,12 +16,24 @@ export default function LoginPage() {
 
     const login = async (e: any) => {
         e.preventDefault();
-        try{
+        try {
             const response = await AxiosInstance.post('/api/auth/login', data);
             dispatch(updateAuthStatus(true));
             toast.success(response.data.message)
             router.push("/");
-        }catch(e:any){
+
+            let cartItems: any = JSON.parse(localStorage.getItem("cart")!);
+            console.log(cartItems)
+            let cartData = cartItems.map((item: any) => ({ productId: item._id, quantity: item.quantity }))
+            console.log(cartData)
+            if (cartItems.length > 1) {
+                AxiosInstance.post("/api/user/carts", cartData).then(res => {
+                    console.log(res);
+                }).catch(e => {
+                    console.log(e)
+                })
+            }
+        } catch (e: any) {
             toast.error(e.response.data.message);
         }
 

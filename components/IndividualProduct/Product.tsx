@@ -4,9 +4,7 @@ import Image from "next/image";
 import { IoIosStar, IoIosStarHalf, IoIosStarOutline } from "react-icons/io";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/entities/cart";
-import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 

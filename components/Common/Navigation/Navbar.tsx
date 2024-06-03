@@ -5,7 +5,7 @@ import { CgProfile } from 'react-icons/cg'
 import { AiOutlineMenu } from 'react-icons/ai'
 import { RxCross1 } from 'react-icons/rx'
 import { Brands, Categories, Collections, Deals_And_Offers, Options, Support } from '../../Utilities/NavLinks';
-import { setCart } from '@/redux/entities/cart'
+import cart, { setCart } from '@/redux/entities/cart'
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import Link from 'next/link'
@@ -22,6 +22,7 @@ import { IoLogOutOutline } from "react-icons/io5";
 import { useRouter } from 'next/router'
 import {fetchProducts} from "@/redux/entities/products";
 import {AppDispatch} from "@/redux/store/store"
+import { useGetCartsQuery } from '@/redux/apis/cartApiSlice';
 
 
 interface NavbarState {
@@ -49,8 +50,9 @@ export interface RootState {
 
 export default function Navbar() {
     const navbarState = useSelector((state: RootState) => state.navbar);
-    const cartState = useSelector((state: any) => state.cart.items)
+    const cartState = useSelector((state: any) => state.cart.items);
     const auth = useSelector((state: any) => state.auth);
+
     const dispatch = useDispatch<AppDispatch>();
     
 
@@ -66,7 +68,8 @@ export default function Navbar() {
     useEffect(() => {
         AxiosInstance.get("/api/auth/verify").then(res => {
             dispatch(updateAuthStatus(res.data.isAuthenticated))
-        }).catch(e => {
+        })
+        .catch(e => {
             dispatch(updateAuthStatus(false));
         })
 
