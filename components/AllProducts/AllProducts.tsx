@@ -11,14 +11,14 @@ export default function AllProducts({products}: {products: any}) {
         return <p className="text-center">Some Error Occured {products.error}</p>
     }
 
-    if (products.loading) {
+    if (products.isLoading) {
         return <p className="text-center">Loading...</p>
     }
 
     return (
         <div className="flex max-w-7xl m-auto flex-wrap">
             {
-                products.productsArray?.map((product:any) => {
+                products.data?.map((product:any) => {
                     return <ProductCard key={product.id} product={product}/>
                 })
             }

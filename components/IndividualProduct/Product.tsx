@@ -2,60 +2,67 @@
 
 import Image from "next/image";
 import { IoIosStar, IoIosStarHalf, IoIosStarOutline } from "react-icons/io";
-import { useDispatch } from "react-redux";
-import { addToCart } from "@/redux/entities/cart";
+import { useDispatch, useSelector } from "react-redux";
+import cart, { addToCart } from "@/redux/entities/cart";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import AxiosInstance from "@/lib/AxiosInstance";
+import { useAddToCartMutation } from "@/redux/apis/cartApiSlice";
 
 export default function Product({ product }: { product: any }) {
     const dispatch = useDispatch();
     const router = useRouter();
+    const auth = useSelector((state: any) => state.auth);
+    const [addToCartBackend] = useAddToCartMutation();
 
-    console.log(product);
-    const [cartItems, setCartItems] = useState([]);
-    
-    
-    useEffect(()=> {
-        console.log(product);
-        if(localStorage.getItem('cart')) {
+    const [cartItems, setCartItems] = useState<any>([]);
+
+
+    useEffect(() => {
+        if (localStorage.getItem('cart')) {
             let cart = localStorage.getItem('cart')!;
             let items: any = JSON.parse(cart) || [];
-            setCartItems((item) => [...item]);
+            setCartItems(items);
         }
     }, [])
-    
+
     const cartFunction = async () => {
-        try {
-        const response = await AxiosInstance.post("/api/user/cart", { productId: product._id, quantity: 1 });
-        console.log(response);
-        } catch (e: any) {
-            toast.info(e.response.data.message)
-        }
-        console.log(product)
-        // let cartItems: any = [];
-        // if (localStorage.getItem('cart')) {
-        //     let cart = localStorage.getItem('cart')!;
-        //     let items: any = JSON.parse(cart) || [];
-        //     cartItems.push(...items);
-        // }
+        if (auth.isAuthenticated) {
+            try {
+                const response = await AxiosInstance.post("/api/user/cart", { productId: product._id, quantity: 1 });
+                // api call for adding to cart in the database
+                addToCartBackend({ productId: product._id, quantity: 1 });
+                // updating the redux store
+                dispatch(addToCart({ item: product }));
+                console.log(response);
+            } catch (e: any) {
+                toast.info(e.response.data.message)
+            }
+        } 
+        // else {
+        //     let cartItems: any = [];
+        //     if (localStorage.getItem('cart')) {
+        //         let cart = localStorage.getItem('cart')!;
+        //         let items: any = JSON.parse(cart) || [];
+        //         cartItems.push(...items);
+        //     }
 
-        // let foundProduct = cartItems.find((cartItem: any) => product.id === cartItem.id);
-        // if (!foundProduct) {
-        //     let currentProduct = { ...product, quantity: 1 }
-        //     cartItems.push(currentProduct);
-        //     dispatch(addToCart({ item: currentProduct }));
-        //     toast.success('Successfully added to the cart')
-        // } else {
-        //     toast.info('Product already added to the cart')
-        // }
+        //     let foundProduct = cartItems.find((cartItem: any) => product.id === cartItem.id);
+        //     if (!foundProduct) {
+        //         let currentProduct = { ...product, quantity: 1 }
+        //         cartItems.push(currentProduct);
+        //         // dispatch(addToCart({ item: currentProduct }));
+        //         toast.success('Successfully added to the cart')
+        //     } else {
+        //         toast.info('Product already added to the cart')
+        //     }
 
-        // localStorage.setItem('cart', JSON.stringify(cartItems));
-        // console.log(cartItems)
+        //     localStorage.setItem('cart', JSON.stringify(cartItems));
+        // }
     }
 
-    const buyFunction = ()=> {
+    const buyFunction = () => {
         let cartItems: any = [];
         if (localStorage.getItem('cart')) {
             let cart = localStorage.getItem('cart')!;
@@ -67,12 +74,12 @@ export default function Product({ product }: { product: any }) {
         if (!foundProduct) {
             let currentProduct = { ...product, quantity: 1 }
             cartItems.push(currentProduct);
-            dispatch(addToCart({ item: currentProduct }));
+            // dispatch(addToCart({ item: currentProduct }));
         }
-        
+
         localStorage.setItem('cart', JSON.stringify(cartItems));
         router.push("/checkout");
-        
+
     }
 
 
@@ -101,7 +108,7 @@ export default function Product({ product }: { product: any }) {
                 })
             }
             <p>{product.rating.count} Reviews</p>
-            
+
             <button onClick={cartFunction} className="mr-5 px-5 py-2 bg-primary-500 rounded-md transition-transform transform hover:scale-105 active:scale-95">Add to Cart</button>
             <button onClick={buyFunction} className="mr-5 px-5 py-2 bg-accent-500 rounded-md transition-transform transform hover:scale-105 active:scale-95">Buy Now</button>
 

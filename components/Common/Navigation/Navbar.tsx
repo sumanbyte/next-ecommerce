@@ -20,7 +20,8 @@ import { toast } from 'react-toastify'
 import Spinner from '@/components/Spinner/Spinner'
 import { IoLogOutOutline } from "react-icons/io5";
 import { useRouter } from 'next/router'
-import {AppDispatch} from "@/redux/store/store"
+import { AppDispatch } from "@/redux/store/store"
+import { useShowCartsQuery } from '@/redux/apis/cartApiSlice';
 
 
 interface NavbarState {
@@ -48,23 +49,26 @@ export interface RootState {
 
 export default function Navbar() {
     const navbarState = useSelector((state: RootState) => state.navbar);
-    const cartState = useSelector((state: any) => state.cart.items);
+    const cartState = useSelector((state: any) => state.cart.items) || [];
+    const { data, isSuccess } = useShowCartsQuery({});
     const auth = useSelector((state: any) => state.auth);
 
     const dispatch = useDispatch<AppDispatch>();
-    
-
     useEffect(() => {
-        dispatch(setCart({ items: JSON.parse(localStorage.getItem('cart')!) || [] }));
-    }, []);
+        if (auth.isAuthenticated) {
+            dispatch(setCart({ items: data }));
+        } else {
+            //TODO: set localstorage value to our cart state
+        }
+    }, [data, dispatch, auth.isAuthenticated]);
 
     useEffect(() => {
         AxiosInstance.get("/api/auth/verify").then(res => {
             dispatch(updateAuthStatus(res.data.isAuthenticated))
         })
-        .catch(e => {
-            dispatch(updateAuthStatus(false));
-        })
+            .catch(e => {
+                dispatch(updateAuthStatus(false));
+            })
 
 
     }, []);
@@ -72,14 +76,16 @@ export default function Navbar() {
 
     const router = useRouter();
 
-    const logout = async ()=> {
-        try{
+    const logout = async () => {
+        try {
             const response = await AxiosInstance.get('/api/auth/logout');
             dispatch(updateAuthStatus(false));
             toast.success(response.data.message)
-            router.push("/");
+            // router.push("/");
+            dispatch(setCart({ items: [] }))
 
-        }catch(e:any){
+
+        } catch (e: any) {
             toast.error(e.response.data.message);
         }
     }
@@ -154,7 +160,7 @@ export default function Navbar() {
                                 }}>
                                     <div className='relative'>
                                         <BiCart className='text-2xl font-bold' />
-                                        <span className='absolute -top-3 -right-2'>{cartState.length}</span>
+                                        <span className='absolute -top-3 -right-2'>{cartState && cartState.length}</span>
 
                                     </div>
                                 </div>

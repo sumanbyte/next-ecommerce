@@ -13,7 +13,7 @@ const store = configureStore({
         [cartsApi.reducerPath]: cartsApi.reducer,
         [productsApi.reducerPath]: productsApi.reducer
     },
-    middleware: (getDefaultMiddleware) => [...getDefaultMiddleware(), cartsApi.middleware, productsApi.middleware]
+    middleware: (getDefaultMiddleware) => [...getDefaultMiddleware(),  productsApi.middleware, cartsApi.middleware]
 });
 
 export type AppDispatch = typeof store.dispatch;

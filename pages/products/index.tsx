@@ -1,10 +1,9 @@
 import AllProducts from "@/components/AllProducts/AllProducts";
-import {  useSelector } from "react-redux";
-import { RootState } from "@/components/Common/Navigation/Navbar";
+import { useGetProductsQuery } from "@/redux/apis/productsApiSlice";
 
 export default function ProductPage() {
 
-    const products = useSelector((state: RootState) => state.products);
+    const products = useGetProductsQuery({});
 
 
 

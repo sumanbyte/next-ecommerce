@@ -1,5 +1,6 @@
 import AxiosInstance from "@/lib/AxiosInstance";
 import { updateAuthStatus } from "@/redux/entities/auth";
+import { setCart } from "@/redux/entities/cart";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
@@ -16,25 +17,16 @@ export default function LoginPage() {
 
     const login = async (e: any) => {
         e.preventDefault();
+
         try {
             const response = await AxiosInstance.post('/api/auth/login', data);
             dispatch(updateAuthStatus(true));
-            toast.success(response.data.message)
+            // dispatch(setCart({ items: cartData }));
+            toast.success(response.data.message);
             router.push("/");
-
-            let cartItems: any = JSON.parse(localStorage.getItem("cart")!);
-            console.log(cartItems)
-            let cartData = cartItems.map((item: any) => ({ productId: item._id, quantity: item.quantity }))
-            console.log(cartData)
-            if (cartItems.length > 1) {
-                AxiosInstance.post("/api/user/carts", cartData).then(res => {
-                    console.log(res);
-                }).catch(e => {
-                    console.log(e)
-                })
-            }
         } catch (e: any) {
-            toast.error(e.response.data.message);
+            console.log(e)
+            // toast.error(e.response.data.message);
         }
 
     }
