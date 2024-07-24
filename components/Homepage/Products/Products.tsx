@@ -27,7 +27,6 @@ export default function Products() {
         return <p>Loading...</p>
     }
 
-    console.log(data);
 
     return (
         <div className="lg:my-20 md:my-16 sm:my-12 my-10 ">

@@ -17,6 +17,26 @@ export const cartsApi = createApi({
         method: "POST",
         body: data,
       }),
+      async onQueryStarted(data, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          cartsApi.util.updateQueryData(
+            "showCarts",
+            undefined,
+            (carts: any) => {
+              console.log(data); // request is sent using this data {productId: '665b0de03b064700ea7055a3', quantity: 1} now the question is when applying optimistic update i have to provide necessary data and mutate the carts array directly but since i don't have enough ready to give data what should i do. what object should i unshift how to i prepare that data.
+              // carts.unshift({productId: data.productId })
+              console.log("hello world");
+              carts.unshift(data);
+            }
+          )
+        );
+
+        try {
+          await queryFulfilled;
+        } catch {
+          patchResult.undo();
+        }
+      },
       invalidatesTags: ["showCarts"],
     }),
     addToCarts: builder.mutation({

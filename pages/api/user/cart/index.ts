@@ -17,20 +17,21 @@ export default async function POST(req: NextApiRequest, res: NextApiResponse) {
 
 async function handlePost(req: NextApiRequest, res: NextApiResponse) {
   const {productId, quantity} = req.body;
+  const _id = productId._id;
 
   // console.log(req.body);
 
-  const isValid = mongoose.Types.ObjectId.isValid(productId);
+  const isValid = mongoose.Types.ObjectId.isValid(_id);
   if (!isValid) {
     return res.status(400).json({ message: "Invalid productId" });
   }
 
-  const existingCart = await Cart.findOne({ productId });
+  const existingCart = await Cart.findOne({ _id });
   if (existingCart) {
     return res.status(400).json({ message: "Item already in cart" });
   }
 
-  const cart = new Cart({ productId, quantity }); 
+  const cart = new Cart({ productId: _id, quantity }); 
   await cart.save();
 
   return res.status(201).json({ message: "Cart created" });

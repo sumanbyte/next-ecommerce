@@ -50,7 +50,7 @@ export interface RootState {
 export default function Navbar() {
     const navbarState = useSelector((state: RootState) => state.navbar);
     const cartState = useSelector((state: any) => state.cart.items) || [];
-    const { data, isSuccess } = useShowCartsQuery({});
+    const { data, isSuccess } = useShowCartsQuery(undefined);
     const auth = useSelector((state: any) => state.auth);
 
     const dispatch = useDispatch<AppDispatch>();

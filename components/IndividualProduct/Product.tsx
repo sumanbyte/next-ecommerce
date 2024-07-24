@@ -30,12 +30,12 @@ export default function Product({ product }: { product: any }) {
     const cartFunction = async () => {
         if (auth.isAuthenticated) {
             try {
-                const response = await AxiosInstance.post("/api/user/cart", { productId: product._id, quantity: 1 });
+               
                 // api call for adding to cart in the database
-                addToCartBackend({ productId: product._id, quantity: 1 });
+                addToCartBackend({ productId: product, quantity: 1 });
                 // updating the redux store
-                dispatch(addToCart({ item: product }));
-                console.log(response);
+                toast.success("Item added to the cart")
+
             } catch (e: any) {
                 toast.info(e.response.data.message)
             }
