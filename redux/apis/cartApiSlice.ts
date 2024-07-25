@@ -11,6 +11,28 @@ export const cartsApi = createApi({
       providesTags: ["showCarts"],
       transformResponse: (response: { carts: any }) => response.carts,
     }),
+    deleteFromCart: builder.mutation({
+      query: (data) => ({
+        url: "/api/user/cart",
+        method: "DELETE",
+        body: data
+      }),
+      invalidatesTags: ["showCarts"],
+      async onQueryStarted(data, {dispatch, queryFulfilled}){
+        const patchResult = dispatch(
+          cartsApi.util.updateQueryData("showCarts", undefined, (carts:any)=> {
+            const cartIndex = carts.findIndex((cart:any)=> cart._id == data.cartId);
+            carts.splice(cartIndex, 1);
+          })
+        )
+
+        try{
+          await queryFulfilled;
+        }catch{
+          patchResult.undo();
+        }
+      }
+    }),
     addToCart: builder.mutation({
       query: (data) => ({
         url: "/api/user/cart",
@@ -23,9 +45,7 @@ export const cartsApi = createApi({
             "showCarts",
             undefined,
             (carts: any) => {
-              console.log(data); // request is sent using this data {productId: '665b0de03b064700ea7055a3', quantity: 1} now the question is when applying optimistic update i have to provide necessary data and mutate the carts array directly but since i don't have enough ready to give data what should i do. what object should i unshift how to i prepare that data.
-              // carts.unshift({productId: data.productId })
-              console.log("hello world");
+              
               carts.unshift(data);
             }
           )
@@ -102,4 +122,5 @@ export const {
   useAddToCartsMutation,
   useAddToCartMutation,
   useUpdateCartMutation,
+  useDeleteFromCartMutation
 } = cartsApi;

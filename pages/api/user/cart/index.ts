@@ -12,6 +12,8 @@ export default async function POST(req: NextApiRequest, res: NextApiResponse) {
       return handleGet(req, res);
     case "PATCH":
       return handlePatch(req, res);
+    case "DELETE":
+      return handleDelete(req, res);
   }
 }
 
@@ -41,3 +43,23 @@ async function handlePost(req: NextApiRequest, res: NextApiResponse) {
 async function handleGet(req: NextApiRequest, res: NextApiResponse) {}
 
 async function handlePatch(req: NextApiRequest, res: NextApiResponse) {}
+
+async function handleDelete(req: NextApiRequest, res: NextApiResponse){
+  const {cartId} = req.body;
+
+  const isValid = mongoose.Types.ObjectId.isValid(cartId);
+
+  if(!isValid){
+    return res.status(200).json({message: "Invalid object id"})
+  }
+
+  const deletion = await Cart.findByIdAndDelete(cartId);
+
+  if(deletion){
+    return res.status(200).json({message: "deleted successfully"})
+  }else{
+    return res.status(400).json({message: "deletion failed"})
+  }
+
+
+}

@@ -3,8 +3,8 @@ import Product from "@/models/Product";
 import { NextApiRequest, NextApiResponse } from "next";
 
 
-connect();
 export default async function GET(req:NextApiRequest, res:NextApiResponse){
+    connect();
     const products = await Product.find({});
 
     if(products){

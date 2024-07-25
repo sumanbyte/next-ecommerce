@@ -11,7 +11,7 @@ const SearchPage = () => {
     const products = useSelector((state: any) => state.products);
     
     return <>
-        <Search query={searchQuery} products={products} />
+        <Search query={searchQuery} />
     </>
 }
 
