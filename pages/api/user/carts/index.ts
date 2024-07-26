@@ -37,8 +37,16 @@ async function handlePost(req: NextApiRequest, res: NextApiResponse) {
 }
 
 async function handleGet(req: NextApiRequest, res: NextApiResponse) {
-  const cartsData = await Cart.find({}).populate("productId");
-  
+  const userInfo = req.headers["user"];
+  let userData;
+
+  if (userInfo) {
+    userData = JSON.parse(userInfo as string);
+  }
+
+  const userId = userData.id;
+  // console.log(userId);
+  const cartsData = await Cart.find({userId}).populate("productId");
   try{
     if (cartsData) {
       return res

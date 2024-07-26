@@ -10,12 +10,10 @@ export default function Cart() {
     const dispatch = useDispatch();
     const auth = useSelector((state: any) => state.auth);
 
-    const { data: cartState, isLoading, error } = useShowCartsQuery(undefined);
+    const { data: cartState } = useShowCartsQuery(undefined);
 
     console.log(cartState)
 
-    if (isLoading) return <p>Loading...</p>
-    if (error) return <p>Some error occured.</p>
 
 
 

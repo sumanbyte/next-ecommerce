@@ -19,21 +19,37 @@ export default async function POST(req: NextApiRequest, res: NextApiResponse) {
 
 async function handlePost(req: NextApiRequest, res: NextApiResponse) {
   const {productId, quantity} = req.body;
-  const _id = productId._id;
+  const userInfo = req.headers["user"];
+  let userData;
 
-  // console.log(req.body);
+
+  if(userInfo){
+    userData = JSON.parse(userInfo as string);
+  }
+
+  const userId = userData.id;
+  
+  let _id;
+
+  if(productId){
+    _id = productId._id;
+  }else{
+    return res.status(400).json({message: "please provide productId"})
+  }
 
   const isValid = mongoose.Types.ObjectId.isValid(_id);
   if (!isValid) {
     return res.status(400).json({ message: "Invalid productId" });
   }
 
+  
+
   const existingCart = await Cart.findOne({ _id });
   if (existingCart) {
     return res.status(400).json({ message: "Item already in cart" });
   }
 
-  const cart = new Cart({ productId: _id, quantity }); 
+  const cart = new Cart({ productId: _id, quantity, userId }); 
   await cart.save();
 
   return res.status(201).json({ message: "Cart created" });

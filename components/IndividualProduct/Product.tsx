@@ -39,7 +39,10 @@ export default function Product({ product }: { product: any }) {
             } catch (e: any) {
                 toast.info(e.response.data.message)
             }
-        } 
+        }else{
+            toast.info("Please Login to continue adding to cart");
+            router.push("/login");
+        }
         // else {
         //     let cartItems: any = [];
         //     if (localStorage.getItem('cart')) {

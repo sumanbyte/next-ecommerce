@@ -1,4 +1,5 @@
 import AxiosInstance from "@/lib/AxiosInstance";
+import { useLazyShowCartsQuery } from "@/redux/apis/cartApiSlice";
 import { updateAuthStatus } from "@/redux/entities/auth";
 import { setCart } from "@/redux/entities/cart";
 import Link from "next/link";
@@ -10,6 +11,7 @@ import { toast } from "react-toastify";
 export default function LoginPage() {
     const [data, setData] = useState({ email: "", password: "" })
     const router = useRouter();
+    const [triggerShowCarts] = useLazyShowCartsQuery();
     const dispatch = useDispatch();
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         setData({ ...data, [e.target.name]: e.target.value })
@@ -21,7 +23,7 @@ export default function LoginPage() {
         try {
             const response = await AxiosInstance.post('/api/auth/login', data);
             dispatch(updateAuthStatus(true));
-            // dispatch(setCart({ items: cartData }));
+            await triggerShowCarts(undefined);
             toast.success(response.data.message);
             router.push("/");
         } catch (e: any) {

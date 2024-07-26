@@ -1,28 +1,39 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from 'next/server'
+import { NextResponse } from 'next/server';
+import { jwtVerify } from 'jose';
+
+export async function middleware(request:any) {
+    const token = request.cookies.get('token')?.value;
 
 
-
-export function middleware(req: NextRequest){
-    const path = req.nextUrl.pathname;
-
-
-    const isPublicPath = path === '/login' || path === '/signup'
-
-    const token = req.cookies.get('token')?.value || '';
-
-
-    if(isPublicPath && token){ 
-        return NextResponse.redirect(new URL("/", req.nextUrl));
+    if (!token) {
+        return new NextResponse(JSON.stringify({ message: "please provide a token" }), {
+            status: 400,
+            headers: { 'Content-Type': 'application/json' }
+        });
     }
 
-    if(!isPublicPath && !token){
-        return NextResponse.redirect(new URL("/login", req.nextUrl));
+    try {
+        const {payload} = await jwtVerify(token, new TextEncoder().encode(process.env.JWT_SECRET!));
+        if(payload){
+            const response = NextResponse.next();
+            response.headers.set("user", JSON.stringify(payload))
+            return response;
+        }else{
+            return new NextResponse(JSON.stringify({ message: "invalid token" }), {
+                status: 400,
+                headers: { 'Content-Type': 'application/json' }
+            });
+        }
+    } catch (error) {
+        return new NextResponse(JSON.stringify({ message: "invalid token" }), {
+            status: 400,
+            headers: { 'Content-Type': 'application/json' }
+        });
     }
+   
 
 }
-
 
 export const config = {
-    matcher: ["/checkout", "/login", "/signup"]
-}
+    matcher: ['/api/user/:path*'],
+};

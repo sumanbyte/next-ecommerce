@@ -21,7 +21,8 @@ import Spinner from '@/components/Spinner/Spinner'
 import { IoLogOutOutline } from "react-icons/io5";
 import { useRouter } from 'next/router'
 import { AppDispatch } from "@/redux/store/store"
-import { useShowCartsQuery } from '@/redux/apis/cartApiSlice';
+import { cartsApi, useShowCartsQuery } from '@/redux/apis/cartApiSlice';
+import { productsApi } from '@/redux/apis/productsApiSlice';
 
 
 interface NavbarState {
@@ -50,18 +51,11 @@ export interface RootState {
 
 export default function Navbar() {
     const navbarState = useSelector((state: RootState) => state.navbar);
-    const cartState = useSelector((state: any) => state.cart.items) || [];
-    const { data, isSuccess } = useShowCartsQuery(undefined);
+    const { data, isLoading, error } = useShowCartsQuery(undefined);
     const auth = useSelector((state: any) => state.auth);
 
     const dispatch = useDispatch<AppDispatch>();
-    useEffect(() => {
-        if (auth.isAuthenticated) {
-            dispatch(setCart({ items: data }));
-        } else {
-            //TODO: set localstorage value to our cart state
-        }
-    }, [data, dispatch, auth.isAuthenticated]);
+
 
     useEffect(() => {
         AxiosInstance.get("/api/auth/verify").then(res => {
@@ -70,21 +64,16 @@ export default function Navbar() {
             .catch(e => {
                 dispatch(updateAuthStatus(false));
             })
-
-
     }, []);
 
-
-    const router = useRouter();
 
     const logout = async () => {
         try {
             const response = await AxiosInstance.get('/api/auth/logout');
             dispatch(updateAuthStatus(false));
-            toast.success(response.data.message)
-            // router.push("/");
-            dispatch(setCart({ items: [] }))
-
+            dispatch(cartsApi.util.resetApiState());
+            dispatch(productsApi.util.resetApiState());
+            toast.success(response.data.message);
 
         } catch (e: any) {
             toast.error(e.response.data.message);
@@ -103,7 +92,6 @@ export default function Navbar() {
         }
     }
 
-    const [menu, showMenu] = useState(true);
 
 
     return (
@@ -115,12 +103,12 @@ export default function Navbar() {
                         {
                             !navbarState.mobilemenu ?
                                 <AiOutlineMenu className='text-xl mx-2' onClick={() => {
-                                    dispatch(changeNav({type: "9"}))
-                                   
+                                    dispatch(changeNav({ type: "9" }))
+
                                 }} />
                                 :
-                                <RxCross1 className='text-xl mx-2' onClick={() =>{
-                                    dispatch(changeNav({type: "9"}))
+                                <RxCross1 className='text-xl mx-2' onClick={() => {
+                                    dispatch(changeNav({ type: "9" }))
 
                                 }} />
                         }
@@ -167,7 +155,7 @@ export default function Navbar() {
                                 }}>
                                     <div className='relative'>
                                         <BiCart className='text-2xl font-bold' />
-                                        <span className='absolute -top-3 -right-2'>{cartState && cartState.length}</span>
+                                        <span className='absolute -top-3 -right-2'>{!isLoading && !error ? data.length : 0}</span>
 
                                     </div>
                                 </div>
@@ -178,7 +166,7 @@ export default function Navbar() {
 
 
                 {shouldShowNavModal() && <NavModal title={navbarState.selectedText} />}
-                <Cart/>
+                <Cart />
 
             </header>
             <div className={`bg-primary-400 text-primary-100 w-[300px] h-mobileNav overflow-scroll absolute z-10 ${navbarState.mobilemenu ? 'block' : 'hidden'}`}>

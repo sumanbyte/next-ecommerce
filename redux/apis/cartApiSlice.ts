@@ -7,7 +7,11 @@ export const cartsApi = createApi({
   reducerPath: "cartsApi",
   endpoints: (builder) => ({
     showCarts: builder.query({
-      query: () => "/api/user/carts",
+      query: () => {
+        return {
+          url: "/api/user/carts",
+          credentials: "include"
+        }},
       providesTags: ["showCarts"],
       transformResponse: (response: { carts: any }) => response.carts,
     }),
@@ -38,6 +42,7 @@ export const cartsApi = createApi({
         url: "/api/user/cart",
         method: "POST",
         body: data,
+        credentials: "include"
       }),
       async onQueryStarted(data, { dispatch, queryFulfilled }) {
         const patchResult = dispatch(
@@ -119,6 +124,7 @@ export const cartsApi = createApi({
 
 export const {
   useShowCartsQuery,
+  useLazyShowCartsQuery,
   useAddToCartsMutation,
   useAddToCartMutation,
   useUpdateCartMutation,
