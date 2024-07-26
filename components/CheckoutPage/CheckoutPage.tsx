@@ -73,7 +73,7 @@ const CheckoutPage: React.FC = () => {
             <p>Total</p>
             <p></p>
             <p></p>
-            <p>{cartItems?.reduce((acc: number, cartItem: any) => {
+            <p>$ {cartItems?.reduce((acc: number, cartItem: any) => {
               return acc + (cartItem.productId.price * cartItem.quantity);
             }, 0).toFixed(2)}</p>
             <p></p>

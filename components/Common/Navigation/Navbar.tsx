@@ -171,8 +171,8 @@ export default function Navbar() {
 
 
                 {shouldShowNavModal() && <NavModal title={navbarState.selectedText} />}
+                <Cart/>
 
-                {navbarState.cart && <Cart />}
             </header>
             <div className={`bg-primary-400 text-primary-100 w-[300px] h-mobileNav overflow-scroll absolute z-10 ${!menu ? 'block' : 'hidden'}`}>
                 <div className="menus" >
