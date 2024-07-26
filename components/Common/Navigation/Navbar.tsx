@@ -35,6 +35,7 @@ interface NavbarState {
     cart: boolean;
     selectedText: string;
     hasMobile: boolean;
+    mobilemenu: boolean;
 }
 
 
@@ -112,10 +113,16 @@ export default function Navbar() {
                 <nav className="max-w-7xl m-auto w-full h-14 text-primary-100 flex items-center justify-between lg:justify-normal">
                     <div className='block lg:hidden w-1/3'>
                         {
-                            menu ?
-                                <AiOutlineMenu className='text-xl mx-2' onClick={() => showMenu((state) => !state)} />
+                            !navbarState.mobilemenu ?
+                                <AiOutlineMenu className='text-xl mx-2' onClick={() => {
+                                    dispatch(changeNav({type: "9"}))
+                                   
+                                }} />
                                 :
-                                <RxCross1 className='text-xl mx-2' onClick={() => showMenu((state) => !state)} />
+                                <RxCross1 className='text-xl mx-2' onClick={() =>{
+                                    dispatch(changeNav({type: "9"}))
+
+                                }} />
                         }
                     </div>
                     <div className="font-comfortaa">
@@ -174,7 +181,7 @@ export default function Navbar() {
                 <Cart/>
 
             </header>
-            <div className={`bg-primary-400 text-primary-100 w-[300px] h-mobileNav overflow-scroll absolute z-10 ${!menu ? 'block' : 'hidden'}`}>
+            <div className={`bg-primary-400 text-primary-100 w-[300px] h-mobileNav overflow-scroll absolute z-10 ${navbarState.mobilemenu ? 'block' : 'hidden'}`}>
                 <div className="menus" >
 
                     <div className="menu flex flex-col mx-2 my-5">

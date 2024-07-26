@@ -11,7 +11,8 @@ const navbar = createSlice({
     options: false,
     search: false,
     cart: false,
-    hasMobile: false
+    hasMobile: false,
+    mobilemenu: false
   },
   reducers: {
     changeNav: (state, action) => {
@@ -28,7 +29,8 @@ const navbar = createSlice({
             search: false,
             cart: false,
             selectedText: action.payload.selectedText,
-            hasMobile: action.payload.hasMobile
+            hasMobile: action.payload.hasMobile,
+            mobilemenu: false
           };
         case "2":
           return {
@@ -42,7 +44,8 @@ const navbar = createSlice({
             search: false,
             cart: false,
             selectedText: action.payload.selectedText,
-            hasMobile: action.payload.hasMobile
+            hasMobile: action.payload.hasMobile,
+            mobilemenu: false
           };
         case "3":
           return {
@@ -56,7 +59,8 @@ const navbar = createSlice({
             search: false,
             cart: false,
             selectedText: action.payload.selectedText,
-            hasMobile: action.payload.hasMobile
+            hasMobile: action.payload.hasMobile,
+            mobilemenu: false
           };
         case "4":
           return {
@@ -70,7 +74,8 @@ const navbar = createSlice({
             search: false,
             cart: false,
             selectedText: action.payload.selectedText,
-            hasMobile: action.payload.hasMobile
+            hasMobile: action.payload.hasMobile,
+            mobilemenu: false
           };
         case "5":
           return {
@@ -84,7 +89,8 @@ const navbar = createSlice({
             search: false,
             cart: false,
             selectedText: action.payload.selectedText,
-            hasMobile: action.payload.hasMobile
+            hasMobile: action.payload.hasMobile,
+            mobilemenu: false
           };
         case "6":
           return {
@@ -98,7 +104,8 @@ const navbar = createSlice({
             search: false,
             cart: false,
             selectedText: action.payload.selectedText,
-            hasMobile: action.payload.hasMobile
+            hasMobile: action.payload.hasMobile,
+            mobilemenu: false
           };
         case "7":
           return {
@@ -112,7 +119,8 @@ const navbar = createSlice({
             search: !state.search,
             cart: false,
             selectedText: action.payload.selectedText,
-            hasMobile: action.payload.hasMobile
+            hasMobile: action.payload.hasMobile,
+            mobilemenu: false
           };
         case "8":
           return {
@@ -126,7 +134,23 @@ const navbar = createSlice({
             search: false,
             cart: !state.cart,
             selectedText: action.payload.selectedText,
-            hasMobile: action.payload.hasMobile
+            hasMobile: action.payload.hasMobile,
+            mobilemenu: false
+          };
+        case "9": 
+          return {
+            ...state,
+            categories: false,
+            brands: false,
+            collections: false,
+            deals_and_offers: false,
+            support: false,
+            options: false,
+            search: false,
+            cart: false,
+            selectedText: action.payload.selectedText,
+            hasMobile: action.payload.hasMobile,
+            mobilemenu: !state.mobilemenu
           };
         default:
           return {
@@ -139,7 +163,8 @@ const navbar = createSlice({
             search: false,
             cart: false,
             selectedText: action.payload.selectedText,
-            hasMobile: action.payload.hasMobile
+            hasMobile: action.payload.hasMobile,
+            mobilemenu: false
           };
       }
     },

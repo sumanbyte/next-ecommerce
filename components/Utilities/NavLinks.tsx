@@ -18,7 +18,7 @@ export function Search() {
         <div className="pt-4 mx-6 ">
             <div className='flex items-center shadow-2xl shadow-blue-500/20'>
                 <AiOutlineSearch className='text-4xl mr-2 ' />
-                    <input className="px-2 py-2 text-2xl w-full outline-none rounded-md   placeholder:text-2xl placeholder:tracking-wider" type="text" placeholder="Search products" onKeyDown={(e) => {
+                    <input className="px-1 py-1 text-xl md:px-2 md:py-2 md:text-2xl w-full outline-none rounded-md placeholder:md:text-2xl  placeholder:text-xl placeholder:tracking-wider" type="text" placeholder="Search products" onKeyDown={(e) => {
                         if (e.key === "Enter") {
                             dispatch(changeNav({ type: '7', selectedText: 'search' }))
                             router.push(`/search?q=${search}`)

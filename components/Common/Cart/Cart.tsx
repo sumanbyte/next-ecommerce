@@ -22,21 +22,20 @@ export default function Cart() {
     const showCartItems = () => {
         if (cartState) {
             return cartState.map((product: any) => {
-                return <p className='px-2 py-2' key={product._id}>{product.productId.title}</p>
+                return <p className='text-sm md:text-base px-2 py-2' key={product._id}>{product.productId.title}</p>
             })
         } else {
-            return <p className='text-center'>Your Cart is currently empty.</p>
+            return <p className='text-sm md:text-base text-center'>Your Cart is currently empty.</p>
         }
     }
 
-    console.log("nav on state " + navbarState?.cart)
     return (
-        <div className={`bg-white p-2 w-96 z-10 h-screen fixed top-0 transition-all ${navbarState.cart ? 'right-0' : '-right-96'} duration-500 ease-in-out`}>
+        <div className={`bg-white p-2 w-60 md:w-96 z-10 h-screen fixed top-0 transition-all ${navbarState.cart ? 'right-0' : '-right-60 md:-right-96'} duration-500 ease-in-out`}>
 
 
 
 
-            <h1 className='text-3xl relative'>Your <span className='text-blue-600'>Cart</span>
+            <h1 className='text-xl md:text-3xl relative'>Your <span className='text-blue-600'>Cart</span>
                 <RxCross2 className='inline absolute right-1 cursor-pointer' onClick={() => {
                     dispatch(changeNav({ type: '8' }))
                 }} />
@@ -54,7 +53,7 @@ export default function Cart() {
 
                             >Checkout</button>
                         </Link>
-                        : <p>You need to be logged in for checkout option</p>
+                        : <p className='text-sm md:text-base text-primary-600'>You need to be logged in for checkout option</p>
                 }
             </div>
         </div>
