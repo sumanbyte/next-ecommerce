@@ -28,6 +28,7 @@ export default function SignupPage() {
                 let items = JSON.parse(localStorage.getItem("cartItems")!);
                 if(items.length > 0){
                     addToCarts(items);
+                    localStorage.removeItem("cartItems");
                 }
             }
             router.push("/");

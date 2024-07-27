@@ -6,14 +6,19 @@ export async function middleware(request: NextRequest) {
 
   const url = request.nextUrl.clone();
 
-  if((url.pathname === "/login" ||
-    url.pathname === "/signup"
-  )&& token){
+  // Allow access to login and signup pages if no token is provided
+  if ((url.pathname === "/login" || url.pathname === "/signup") && !token) {
+    return NextResponse.next();
+  }
+
+  // Redirect authenticated users away from login and signup pages
+  if ((url.pathname === "/login" || url.pathname === "/signup") && token) {
     url.pathname = "/";
     return NextResponse.redirect(url);
   }
 
-  if(url.pathname === "/checkout" && !token){
+  // Redirect unauthenticated users away from protected routes
+  if (url.pathname === "/checkout" && !token) {
     url.pathname = "/";
     return NextResponse.redirect(url);
   }

@@ -4,14 +4,10 @@ import { ProductObjectInterface } from "@/components/Homepage/Products/Products"
 import IndividualProduct from '@/components/IndividualProduct/Product';
 import { useGetProductsQuery } from "@/redux/apis/productsApiSlice";
 
-
-
-
 export default function ProductPage() {
     const pathname: any = usePathname();
     const {data: products, error, isLoading}= useGetProductsQuery({});
     
-
     const product: ProductObjectInterface | undefined = useMemo(() => {
         if (pathname) {
             const number = Number(pathname.split('/')[2]);
@@ -19,8 +15,6 @@ export default function ProductPage() {
             return products.find((product:any) => product.id === number)
         }
     }, [products, pathname])
-
-
 
     if (error) {
         return <p className="text-center">Some Error Occured {products.error}</p>

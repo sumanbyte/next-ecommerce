@@ -1,7 +1,5 @@
 import React from 'react';
 
-
-
 export default function Feature({ Icon, title, description }: { Icon: React.FC; title: string; description: string }) {
     return (
         <div className="text-center">

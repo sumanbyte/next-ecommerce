@@ -41,7 +41,6 @@ const Hero = () => {
 
   }, [currentIndex, myObj.length])
 
-
   const {title, img, textColor} = myObj[currentIndex]
 
   return (

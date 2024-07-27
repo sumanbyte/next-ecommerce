@@ -2,17 +2,13 @@ import { AiOutlineSearch } from 'react-icons/ai'
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import { changeNav } from '@/redux/entities/navbar'
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 
 export function Search() {
     const router = useRouter();
     const dispatch = useDispatch();
     const [search, setSearch] = useState('');
-
-    // useEffect(()=> {
-    //     router.push(`/search?q=${search}`)
-    // }, [search]);
 
     return (
         <div className="pt-4 mx-6 ">

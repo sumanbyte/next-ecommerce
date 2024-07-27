@@ -5,8 +5,7 @@ import { CgProfile } from 'react-icons/cg'
 import { AiOutlineMenu } from 'react-icons/ai'
 import { RxCross1 } from 'react-icons/rx'
 import { Brands, Categories, Collections, Deals_And_Offers, Options, Support } from '../../Utilities/NavLinks';
-import cart, { setCart } from '@/redux/entities/cart'
-import { useState, useEffect } from 'react'
+import {  useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import Link from 'next/link'
 import NavModal from './NavModal'
@@ -22,7 +21,6 @@ import { IoLogOutOutline } from "react-icons/io5";
 import { useRouter } from 'next/router'
 import { AppDispatch } from "@/redux/store/store"
 import { cartsApi, useShowCartsQuery } from '@/redux/apis/cartApiSlice';
-import { productsApi } from '@/redux/apis/productsApiSlice';
 
 
 interface NavbarState {
@@ -54,7 +52,6 @@ export default function Navbar() {
     const { data, isLoading, error } = useShowCartsQuery(undefined);
     const auth = useSelector((state: any) => state.auth);
     const router = useRouter();
-
     const dispatch = useDispatch<AppDispatch>();
 
 
@@ -73,7 +70,6 @@ export default function Navbar() {
             const response = await AxiosInstance.get('/api/auth/logout');
             dispatch(updateAuthStatus(false));
             dispatch(cartsApi.util.resetApiState());
-            dispatch(productsApi.util.resetApiState());
             toast.success(response.data.message);
             router.push("/");
 
@@ -83,10 +79,8 @@ export default function Navbar() {
     }
 
     const shouldShowNavModal = () => {
-
         return (navbarState.categories || navbarState.brands || navbarState.collections || navbarState.deals_and_offers || navbarState.support || navbarState.options || navbarState.search) && !navbarState.hasMobile;
     }
-
 
     const modalLeaveState = () => {
         if (!navbarState.search && !navbarState.cart) {
@@ -94,12 +88,9 @@ export default function Navbar() {
         }
     }
 
-
-
     return (
         <>
             <header onMouseLeave={modalLeaveState} className=' bg-primary-500 m-auto'>
-
                 <nav className="max-w-7xl m-auto w-full h-14 text-primary-100 flex items-center justify-between lg:justify-normal">
                     <div className='block lg:hidden w-1/3'>
                         {
@@ -149,7 +140,6 @@ export default function Navbar() {
                                                 <Link href={'/login'}>
                                                     <CgProfile className='text-2xl font-bold' />
                                                 </Link>
-
                                     }
                                 </div>
                                 <div className='hover:text-red-700 duration-500 cursor-pointer mr-4' onClick={() => {
@@ -265,7 +255,5 @@ export default function Navbar() {
                 </div>
             </div>
         </>
-
-
     )
 }

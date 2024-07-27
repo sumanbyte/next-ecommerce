@@ -2,7 +2,6 @@ import NavItem from "./NavItem";
 
 export interface NavModalProp {
     title: string;
-
 }
 
 export default function NavModal(props: NavModalProp) {

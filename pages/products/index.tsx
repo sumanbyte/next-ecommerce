@@ -2,10 +2,7 @@ import AllProducts from "@/components/AllProducts/AllProducts";
 import { useGetProductsQuery } from "@/redux/apis/productsApiSlice";
 
 export default function ProductPage() {
-
     const products = useGetProductsQuery({});
-
-
 
     return <div className="">
         <div>

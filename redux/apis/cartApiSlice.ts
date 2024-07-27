@@ -1,4 +1,3 @@
-// File path: src/redux/apis/cartApiSlice.ts
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const cartsApi = createApi({

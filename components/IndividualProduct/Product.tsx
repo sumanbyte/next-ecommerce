@@ -2,35 +2,19 @@
 
 import Image from "next/image";
 import { IoIosStar, IoIosStarHalf, IoIosStarOutline } from "react-icons/io";
-import { useDispatch, useSelector } from "react-redux";
-import cart, { addToCart } from "@/redux/entities/cart";
+import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import AxiosInstance from "@/lib/AxiosInstance";
 import { useAddToCartMutation } from "@/redux/apis/cartApiSlice";
 
 export default function Product({ product }: { product: any }) {
-    const dispatch = useDispatch();
     const router = useRouter();
     const auth = useSelector((state: any) => state.auth);
     const [addToCartBackend] = useAddToCartMutation();
 
-    const [cartItems, setCartItems] = useState<any>([]);
-
-
-    useEffect(() => {
-        if (localStorage.getItem('cart')) {
-            let cart = localStorage.getItem('cart')!;
-            let items: any = JSON.parse(cart) || [];
-            setCartItems(items);
-        }
-    }, [])
-
     const cartFunction = async () => {
         if (auth.isAuthenticated) {
             try {
-               
                 // api call for adding to cart in the database
                 addToCartBackend({ productId: product, quantity: 1 });
                 // updating the redux store
@@ -39,70 +23,37 @@ export default function Product({ product }: { product: any }) {
             } catch (e: any) {
                 toast.info(e.response.data.message)
             }
-        }else{
+        } else {
             let cartItems: any[] = localStorage.getItem("cartItems") as any || [];
 
-            if(localStorage.getItem("cartItems")){
-                if(JSON.parse(localStorage.getItem("cartItems")!)){
+            if (localStorage.getItem("cartItems")) {
+                if (JSON.parse(localStorage.getItem("cartItems")!)) {
                     let parsedItems = JSON.parse(cartItems as any);
-                    const index = parsedItems.findIndex((item:any) => item.id === product.id);
-                    if(index < 0){
+                    const index = parsedItems.findIndex((item: any) => item.id === product.id);
+                    if (index < 0) {
                         parsedItems.push(product);
                         localStorage.setItem("cartItems", JSON.stringify(parsedItems));
                         toast.success("Item added to the cart successfully")
-                    }else{
+                    } else {
                         toast.info("Item already in your cart");
                     }
                 }
-
-            }else{
+            } else {
                 cartItems.push(product);
                 localStorage.setItem("cartItems", JSON.stringify(cartItems));
                 toast.success("Item added to the cart successfully")
-
             }
-
         }
-        // else {
-        //     let cartItems: any = [];
-        //     if (localStorage.getItem('cart')) {
-        //         let cart = localStorage.getItem('cart')!;
-        //         let items: any = JSON.parse(cart) || [];
-        //         cartItems.push(...items);
-        //     }
-
-        //     let foundProduct = cartItems.find((cartItem: any) => product.id === cartItem.id);
-        //     if (!foundProduct) {
-        //         let currentProduct = { ...product, quantity: 1 }
-        //         cartItems.push(currentProduct);
-        //         // dispatch(addToCart({ item: currentProduct }));
-        //         toast.success('Successfully added to the cart')
-        //     } else {
-        //         toast.info('Product already added to the cart')
-        //     }
-
-        //     localStorage.setItem('cart', JSON.stringify(cartItems));
-        // }
     }
 
     const buyFunction = () => {
-        let cartItems: any = [];
-        if (localStorage.getItem('cart')) {
-            let cart = localStorage.getItem('cart')!;
-            let items: any = JSON.parse(cart) || [];
-            cartItems.push(...items);
+        if (auth.isAuthenticated) {
+            addToCartBackend({ productId: product, quantity: 1 })
+            router.push("/checkout");
+        } else {
+            toast.info("Please login to continue your purchase");
+            router.push("/login");
         }
-
-        let foundProduct = cartItems.find((cartItem: any) => product.id === cartItem.id);
-        if (!foundProduct) {
-            let currentProduct = { ...product, quantity: 1 }
-            cartItems.push(currentProduct);
-            // dispatch(addToCart({ item: currentProduct }));
-        }
-
-        localStorage.setItem('cart', JSON.stringify(cartItems));
-        router.push("/checkout");
-
     }
 
 
@@ -134,7 +85,6 @@ export default function Product({ product }: { product: any }) {
 
             <button onClick={cartFunction} className="mr-5 px-5 py-2 bg-primary-500 rounded-md transition-transform transform hover:scale-105 active:scale-95">Add to Cart</button>
             <button onClick={buyFunction} className="mr-5 px-5 py-2 bg-accent-500 rounded-md transition-transform transform hover:scale-105 active:scale-95">Buy Now</button>
-
         </div>
     </div>
 }

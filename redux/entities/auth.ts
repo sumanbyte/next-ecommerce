@@ -12,11 +12,8 @@ const slice = createSlice({
             state.isLoading = false;
             state.isAuthenticated = action.payload;
         }
-
-
     }
 })
 
 export const { updateAuthStatus} = slice.actions;
-
 export default slice.reducer;

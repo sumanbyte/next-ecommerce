@@ -18,7 +18,6 @@ export default async function POST(req: NextApiRequest, res: NextApiResponse){
         return res.status(400).json({message: "User already exists."})
     }
 
-
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await User.create({name, email, password: hashedPassword});
@@ -30,8 +29,6 @@ export default async function POST(req: NextApiRequest, res: NextApiResponse){
     }
 
     const token = jwt.sign(tokenData, process.env.JWT_SECRET!, {expiresIn: "1D"});
-
-    
 
     if(user){
         res.setHeader("Set-Cookie", `token=${token}; HttpOnly; Path=/; Max-Age=${60 * 60 * 24}; SameSite=Strict;`)

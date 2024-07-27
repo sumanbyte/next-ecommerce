@@ -1,14 +1,10 @@
 import {useDispatch} from 'react-redux'
 import {changeNav} from '@/redux/entities/navbar'
-import Link from 'next/link'
 import { BiChevronDown } from 'react-icons/bi'
-
 
 
 const Category = (props: {type: string, text: string, state: boolean}) => {
     const dispatch = useDispatch();
-
-
     return (
         <div>
             <div onClick={() => {

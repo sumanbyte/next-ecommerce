@@ -1,14 +1,10 @@
-// File path: src/pages/CheckoutPage.tsx
 import Image from 'next/image';
 import {
   useDeleteFromCartMutation,
   useShowCartsQuery,
   useUpdateCartMutation,
 } from '@/redux/apis/cartApiSlice';
-import { AiFillDelete } from "react-icons/ai";
 import { MdDelete } from "react-icons/md";
-
-
 
 const CheckoutPage: React.FC = () => {
   const { data: cartItems, isLoading, error } = useShowCartsQuery(undefined);

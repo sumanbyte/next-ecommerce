@@ -9,13 +9,7 @@ export default function Cart() {
     const navbarState = useSelector((state: RootState) => state.navbar);
     const dispatch = useDispatch();
     const auth = useSelector((state: any) => state.auth);
-
     const { data: cartState } = useShowCartsQuery(undefined);
-
-    console.log(cartState)
-
-
-
 
     const showCartItems = () => {
         if (cartState) {
@@ -29,10 +23,6 @@ export default function Cart() {
 
     return (
         <div className={`bg-white p-2 w-60 md:w-96 z-10 h-screen fixed top-0 transition-all ${navbarState.cart ? 'right-0' : '-right-60 md:-right-96'} duration-500 ease-in-out`}>
-
-
-
-
             <h1 className='text-xl md:text-3xl relative'>Your <span className='text-blue-600'>Cart</span>
                 <RxCross2 className='inline absolute right-1 cursor-pointer' onClick={() => {
                     dispatch(changeNav({ type: '8' }))

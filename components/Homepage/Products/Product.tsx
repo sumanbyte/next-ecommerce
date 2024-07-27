@@ -25,6 +25,5 @@ export default function Product({ product }: { product: ProductObjectInterface }
             </div>
         </Link>
         </div>
-
     );
 }

@@ -4,7 +4,6 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { connect } from "@/lib/dbConfig/dbConfig";
 
-
 export default async function POST(req: NextApiRequest, res: NextApiResponse) {
     await connect();
   const { email, password } = req.body;

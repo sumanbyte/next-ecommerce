@@ -2,13 +2,10 @@ import { useGetProductsQuery } from "@/redux/apis/productsApiSlice";
 import ProductCard from "../AllProducts/ProductCard";
 
 const Search = ({ query }: { query: string | null}) => {
-
     const {data: products, error,  isLoading} = useGetProductsQuery(undefined);
-
     const searchResult = products?.filter((product: any) => {
         return product.title.toLowerCase().includes(query?.toLowerCase());
     });
-
 
     if (isLoading) {
         return <p>Loading...</p>
@@ -37,8 +34,6 @@ const Search = ({ query }: { query: string | null}) => {
             </>
 
         }
-
-
     </div>
 }
 

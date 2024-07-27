@@ -1,7 +1,6 @@
 import AxiosInstance from "@/lib/AxiosInstance";
 import { useLazyShowCartsQuery } from "@/redux/apis/cartApiSlice";
 import { updateAuthStatus } from "@/redux/entities/auth";
-import { setCart } from "@/redux/entities/cart";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
@@ -19,7 +18,6 @@ export default function LoginPage() {
 
     const login = async (e: any) => {
         e.preventDefault();
-
         try {
             const response = await AxiosInstance.post('/api/auth/login', data);
             dispatch(updateAuthStatus(true));
@@ -28,13 +26,12 @@ export default function LoginPage() {
             await triggerShowCarts(undefined);
         } catch (e: any) {
             console.log(e)
-            // toast.error(e.response.data.message);
+            toast.error(e.response.data.message);
         }
-
     }
+
     return (
         <>
-
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 mt-10">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                     <h1 className='font-bold text-2xl cursor-pointer text-center font-comfortaa'>ShopWave</h1>
