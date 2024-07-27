@@ -1,5 +1,6 @@
 "use client";
 import AxiosInstance from "@/lib/AxiosInstance";
+import { useAddToCartsMutation } from "@/redux/apis/cartApiSlice";
 import { updateAuthStatus } from "@/redux/entities/auth";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -12,6 +13,7 @@ export default function SignupPage() {
     const [data, setData] = useState({ name: "", email: "", password: "" });
     const router = useRouter();
     const dispatch = useDispatch();
+    const [addToCarts] = useAddToCartsMutation();
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         setData({ ...data, [e.target.name]: e.target.value })
     }
@@ -21,6 +23,13 @@ export default function SignupPage() {
         try {
             const response = await AxiosInstance.post('/api/auth/signup', data);
             dispatch(updateAuthStatus(true));
+
+            if(localStorage.getItem("cartItems")){
+                let items = JSON.parse(localStorage.getItem("cartItems")!);
+                if(items.length > 0){
+                    addToCarts(items);
+                }
+            }
             router.push("/");
             toast.success(response.data.message)
 

@@ -13,12 +13,30 @@ export default async function POST(req: NextApiRequest, res: NextApiResponse) {
 }
 
 async function handlePost(req: NextApiRequest, res: NextApiResponse) {
+  const userInfo = req.headers["user"];
+  let userData;
+
+  if (userInfo) {
+    userData = JSON.parse(userInfo as string);
+  }
+
+  const userId = userData.id;
   const cartData = req.body;
   
   const data = await Cart.find({}).populate("productId");
 
+  const revisedData = cartData.map((data:any) => {
+    return {
+      productId: data._id,
+      quantity: data.quantity,
+      userId
+    }
+  });
+
+  console.log(revisedData);
+
   try {
-   const response = await Cart.insertMany(cartData);
+   const response = await Cart.insertMany(revisedData);
 
     if (response) {
       return res
@@ -30,6 +48,7 @@ async function handlePost(req: NextApiRequest, res: NextApiResponse) {
         .json({ message: "Failed to insert the products.", carts: data });
     }
   } catch (e) {
+    console.log(e);
     return res
       .status(400)
       .json({ message: "Failed to insert the products error.", carts: data});

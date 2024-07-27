@@ -40,8 +40,28 @@ export default function Product({ product }: { product: any }) {
                 toast.info(e.response.data.message)
             }
         }else{
-            toast.info("Please Login to continue adding to cart");
-            router.push("/login");
+            let cartItems: any[] = localStorage.getItem("cartItems") as any || [];
+
+            if(localStorage.getItem("cartItems")){
+                if(JSON.parse(localStorage.getItem("cartItems")!)){
+                    let parsedItems = JSON.parse(cartItems as any);
+                    const index = parsedItems.findIndex((item:any) => item.id === product.id);
+                    if(index < 0){
+                        parsedItems.push(product);
+                        localStorage.setItem("cartItems", JSON.stringify(parsedItems));
+                        toast.success("Item added to the cart successfully")
+                    }else{
+                        toast.info("Item already in your cart");
+                    }
+                }
+
+            }else{
+                cartItems.push(product);
+                localStorage.setItem("cartItems", JSON.stringify(cartItems));
+                toast.success("Item added to the cart successfully")
+
+            }
+
         }
         // else {
         //     let cartItems: any = [];
