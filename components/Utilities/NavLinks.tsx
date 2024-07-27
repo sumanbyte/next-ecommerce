@@ -25,6 +25,7 @@ export function Search() {
                         }
                     }}
                         onChange={(e) => setSearch(e.target.value)}
+                        autoFocus
                         value={search}
                     />
                 <hr />
