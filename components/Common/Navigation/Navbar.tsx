@@ -53,6 +53,7 @@ export default function Navbar() {
     const navbarState = useSelector((state: RootState) => state.navbar);
     const { data, isLoading, error } = useShowCartsQuery(undefined);
     const auth = useSelector((state: any) => state.auth);
+    const router = useRouter();
 
     const dispatch = useDispatch<AppDispatch>();
 
@@ -74,6 +75,7 @@ export default function Navbar() {
             dispatch(cartsApi.util.resetApiState());
             dispatch(productsApi.util.resetApiState());
             toast.success(response.data.message);
+            router.push("/");
 
         } catch (e: any) {
             toast.error(e.response.data.message);

@@ -23,9 +23,9 @@ export default function LoginPage() {
         try {
             const response = await AxiosInstance.post('/api/auth/login', data);
             dispatch(updateAuthStatus(true));
-            await triggerShowCarts(undefined);
             toast.success(response.data.message);
             router.push("/");
+            await triggerShowCarts(undefined);
         } catch (e: any) {
             console.log(e)
             // toast.error(e.response.data.message);
