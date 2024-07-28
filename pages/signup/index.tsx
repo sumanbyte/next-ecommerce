@@ -24,11 +24,11 @@ export default function SignupPage() {
             const response = await AxiosInstance.post('/api/auth/signup', data);
             dispatch(updateAuthStatus(true));
 
-            if(localStorage.getItem("cartItems")){
-                let items = JSON.parse(localStorage.getItem("cartItems")!);
+            if(sessionStorage.getItem("cartItems")){
+                let items = JSON.parse(sessionStorage.getItem("cartItems")!);
                 if(items.length > 0){
                     addToCarts(items);
-                    localStorage.removeItem("cartItems");
+                    sessionStorage.removeItem("cartItems");
                 }
             }
             router.push("/");

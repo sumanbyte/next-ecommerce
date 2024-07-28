@@ -5,7 +5,7 @@ import { CgProfile } from 'react-icons/cg'
 import { AiOutlineMenu } from 'react-icons/ai'
 import { RxCross1 } from 'react-icons/rx'
 import { Brands, Categories, Collections, Deals_And_Offers, Options, Support } from '../../Utilities/NavLinks';
-import {  useEffect } from 'react'
+import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import Link from 'next/link'
 import NavModal from './NavModal'
@@ -142,15 +142,18 @@ export default function Navbar() {
                                                 </Link>
                                     }
                                 </div>
-                                <div className='hover:text-red-700 duration-500 cursor-pointer mr-4' onClick={() => {
-                                    dispatch(changeNav({ type: '8' }))
-                                }}>
-                                    <div className='relative'>
-                                        <BiCart className='text-2xl font-bold' />
-                                        <span className='absolute -top-3 -right-2'>{!isLoading && !error ? data.length : 0}</span>
+                                {
+                                    auth.isAuthenticated &&
+                                    <div className='hover:text-red-700 duration-500 cursor-pointer mr-4' onClick={() => {
+                                        dispatch(changeNav({ type: '8' }))
+                                    }}>
+                                        <div className='relative'>
+                                            <BiCart className='text-2xl font-bold' />
+                                            <span className='absolute -top-3 -right-2'>{!isLoading && !error ? data.length : 0}</span>
 
+                                        </div>
                                     </div>
-                                </div>
+                                }
                             </div>
                         </div>
                     </div>

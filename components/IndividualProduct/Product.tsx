@@ -24,15 +24,15 @@ export default function Product({ product }: { product: any }) {
                 toast.info(e.response.data.message)
             }
         } else {
-            let cartItems: any[] = localStorage.getItem("cartItems") as any || [];
+            let cartItems: any[] = sessionStorage.getItem("cartItems") as any || [];
 
-            if (localStorage.getItem("cartItems")) {
-                if (JSON.parse(localStorage.getItem("cartItems")!)) {
+            if (sessionStorage.getItem("cartItems")) {
+                if (JSON.parse(sessionStorage.getItem("cartItems")!)) {
                     let parsedItems = JSON.parse(cartItems as any);
                     const index = parsedItems.findIndex((item: any) => item.id === product.id);
                     if (index < 0) {
                         parsedItems.push(product);
-                        localStorage.setItem("cartItems", JSON.stringify(parsedItems));
+                        sessionStorage.setItem("cartItems", JSON.stringify(parsedItems));
                         toast.success("Item added to the cart successfully")
                     } else {
                         toast.info("Item already in your cart");
@@ -40,7 +40,7 @@ export default function Product({ product }: { product: any }) {
                 }
             } else {
                 cartItems.push(product);
-                localStorage.setItem("cartItems", JSON.stringify(cartItems));
+                sessionStorage.setItem("cartItems", JSON.stringify(cartItems));
                 toast.success("Item added to the cart successfully")
             }
         }
