@@ -16,6 +16,9 @@ export default async function POST(req: NextApiRequest, res: NextApiResponse) {
 
   if (userExists) {
     if (await bcrypt.compare(password, userExists.password)) {
+      if(!userExists.verified){
+        return res.status(400).json({message: "User is not verified"});
+      }
       const tokenData = {
         id: userExists._id,
         name: userExists.name,

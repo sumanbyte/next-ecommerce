@@ -22,7 +22,6 @@ export default function SignupPage() {
         e.preventDefault();
         try {
             const response = await AxiosInstance.post('/api/auth/signup', data);
-            dispatch(updateAuthStatus(true));
 
             if(sessionStorage.getItem("cartItems")){
                 let items = JSON.parse(sessionStorage.getItem("cartItems")!);
@@ -31,8 +30,15 @@ export default function SignupPage() {
                     sessionStorage.removeItem("cartItems");
                 }
             }
-            router.push("/");
-            toast.success(response.data.message)
+
+            console.log(response.data)
+
+            if(response.data.success){
+                router.push("/auth/verification")
+                toast.success(response.data.message);
+            }else{
+                toast.info("Some error occured.")
+            }
 
         } catch (e: any) {
             toast.error(e.response.data.message);
@@ -91,11 +97,6 @@ export default function SignupPage() {
                             <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
                                 Password
                             </label>
-                            <div className="text-sm">
-                                <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                                    Forgot password?
-                                </a>
-                            </div>
                         </div>
                         <div className="mt-2">
                             <input
@@ -123,7 +124,7 @@ export default function SignupPage() {
 
                 <p className="mt-10 text-center text-sm text-gray-500">
                     Already have an account?{' '}
-                    <Link href="/login" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+                    <Link href="/auth/login" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
                         Login
                     </Link>
                 </p>

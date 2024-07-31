@@ -137,7 +137,7 @@ export default function Navbar() {
                                             auth.isAuthenticated && !auth.isLoading ? <div onClick={logout} title="Logout">
                                                 <IoLogOutOutline className='text-2xl font-bold' />
                                             </div> :
-                                                <Link href={'/login'}>
+                                                <Link href={'/auth/login'}>
                                                     <CgProfile className='text-2xl font-bold' />
                                                 </Link>
                                     }
