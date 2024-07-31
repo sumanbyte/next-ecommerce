@@ -20,6 +20,7 @@ export default function SignupPage() {
 
     const signup = async (e: any) => {
         e.preventDefault();
+        
         try {
             const response = await AxiosInstance.post('/api/auth/signup', data);
 
@@ -34,6 +35,7 @@ export default function SignupPage() {
             console.log(response.data)
 
             if(response.data.success){
+                sessionStorage.setItem("email", JSON.stringify(data.email));
                 router.push("/auth/verification")
                 toast.success(response.data.message);
             }else{
