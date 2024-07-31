@@ -1,4 +1,6 @@
+import AxiosInstance from "@/lib/AxiosInstance";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 const ForgetPassword = () => {
     const [data, setData] = useState({email: ''});
@@ -7,8 +9,12 @@ const ForgetPassword = () => {
         setData({...data, [e.target.name]: e.target.value})
     }
 
-    const forgetpassword = ()=> {
-
+    const forgetpassword = async ()=> {
+        const response = await AxiosInstance.post("/api/user/forgetpassword", {email: data.email});
+        if(response.data.success){
+            toast.success(response.data.message);
+            setData({email: ""});
+        }
     }
   return (
     <>

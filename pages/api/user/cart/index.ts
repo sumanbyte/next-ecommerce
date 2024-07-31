@@ -42,8 +42,6 @@ async function handlePost(req: NextApiRequest, res: NextApiResponse) {
     return res.status(400).json({ message: "Invalid productId" });
   }
 
-  
-
   const existingCart = await Cart.findOne({ _id });
   if (existingCart) {
     return res.status(400).json({ message: "Item already in cart" });
