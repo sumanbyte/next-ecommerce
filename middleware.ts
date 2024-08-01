@@ -60,6 +60,21 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
+  const forgetpassword = request.cookies.get("forgetpassword")?.value;
+
+  if(url.pathname === "/changepassword" && forgetpassword === "true"){
+    const response = NextResponse.next();
+    response.cookies.set("forgetpassword", '', {httpOnly: true, maxAge: 0, path: "/", sameSite: "strict"});
+    return response;
+  }
+
+  if(url.pathname === "/changepassword" && !forgetpassword){
+    url.pathname = "/";
+    url.searchParams.delete("token");
+    url.searchParams.delete("userId");
+    return NextResponse.redirect(url);
+  }
+
   if (!token) {
     return new NextResponse(
       JSON.stringify({ message: "please provide a token" }),
@@ -102,6 +117,7 @@ export const config = {
     "/auth/signup",
     "/checkout",
     "/auth/verification",
-    "/welcome"
+    "/welcome",
+    "/changepassword"
   ],
 };

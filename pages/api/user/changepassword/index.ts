@@ -1,6 +1,7 @@
 import { connect } from "@/lib/dbConfig/dbConfig";
 import Token from "@/models/Token";
 import User from "@/models/User";
+import bcrypt from "bcrypt";
 import { NextApiRequest, NextApiResponse } from "next";
 
 
@@ -25,7 +26,9 @@ export default async function POST(req:NextApiRequest, res: NextApiResponse){
         return res.status(400).json({message: "User doesn't exists"});
     }
 
-    const updateResult = await User.findByIdAndUpdate(userId, {password});
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const updateResult = await User.findByIdAndUpdate(userId, {password: hashedPassword});
 
     if(updateResult){
         await Token.deleteOne({token, userId});

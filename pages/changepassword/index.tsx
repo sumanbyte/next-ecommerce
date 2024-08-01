@@ -1,6 +1,6 @@
 import AxiosInstance from "@/lib/AxiosInstance";
 import { useRouter } from "next/router";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 const ChangePassword = () => {
@@ -9,28 +9,34 @@ const ChangePassword = () => {
     const token = query.token?.toString() || "";
     const userId = query.userId?.toString() || "";
 
-    const [data, setData] = useState({password: '', cpassword: ''});
+    const [data, setData] = useState({ password: '', cpassword: '' });
 
-    const onChange = (e:any) => {
-        setData({...data, [e.target.name]: e.target.value})
+    const onChange = (e: any) => {
+        setData({ ...data, [e.target.name]: e.target.value })
     }
 
-    const changepassword = async (e:FormEvent<HTMLFormElement>, token: string, userId:string)=> {
+    const changepassword = async (e: FormEvent<HTMLFormElement>, token: string, userId: string) => {
         e.preventDefault();
-        try{
-            console.log(data.password, token, userId);
-            const response = await AxiosInstance.post("/api/user/changepassword", {password: data.password, token, userId});
-            if(response.data.success){
-                toast.success(response.data.message);
-                router.push("/login");
-            }
-        }catch(error){
-            console.log(error)
+        if(data.password !== data.cpassword){
+            return toast.info("Password and confirm password dont't match")
         }
-        
+        try {
+            const response = await AxiosInstance.post("/api/user/changepassword", { password: data.password, token, userId });
+            if (response.data.success) {
+                toast.success(response.data.message);
+                router.push("/auth/login");
+            }
+        } catch (error: any) {
+            console.log(error)
+            toast.info(error.response.data.message)
+        }
+
     }
-  return (
-    <>
+
+
+    return (
+        <>
+            <p className="text-center bg-secondary-300 py-2">Please don&apos;t refresh the page until you change your password.</p>
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 mt-10">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                     <h1 className='font-bold text-2xl cursor-pointer text-center font-comfortaa'>ShopWave</h1>
@@ -40,7 +46,7 @@ const ChangePassword = () => {
                 </div>
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                    <form className="space-y-6" action="#" method="POST" onSubmit={(e)=> changepassword(e, token, userId)}>
+                    <form className="space-y-6" action="#" method="POST" onSubmit={(e) => changepassword(e, token, userId)}>
                         <div>
                             <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
                                 Password
@@ -72,7 +78,7 @@ const ChangePassword = () => {
                             </div>
                         </div>
 
-                        
+
 
                         <div>
                             <button
@@ -84,11 +90,11 @@ const ChangePassword = () => {
                         </div>
                     </form>
 
-                    
+
                 </div>
             </div>
         </>
-  )
+    )
 }
 
 export default ChangePassword;

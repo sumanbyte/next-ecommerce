@@ -1,23 +1,29 @@
 import AxiosInstance from "@/lib/AxiosInstance";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { toast } from "react-toastify";
 
 const ForgetPassword = () => {
-    const [data, setData] = useState({email: ''});
+    const [data, setData] = useState({ email: '' });
 
-    const onChange = (e:any) => {
-        setData({...data, [e.target.name]: e.target.value})
+    const onChange = (e: any) => {
+        setData({ ...data, [e.target.name]: e.target.value })
     }
 
-    const forgetpassword = async ()=> {
-        const response = await AxiosInstance.post("/api/user/forgetpassword", {email: data.email});
-        if(response.data.success){
-            toast.success(response.data.message);
-            setData({email: ""});
+    const forgetpassword = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        try {
+            const response = await AxiosInstance.post("/api/user/forgetpassword", { email: data.email });
+            if (response.data.success) {
+                toast.success(response.data.message);
+                setData({ email: "" });
+            }
+        } catch (error:any) {
+            console.log(error);
+            toast.info(error.response.data.message)
         }
     }
-  return (
-    <>
+    return (
+        <>
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 mt-10">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                     <h1 className='font-bold text-2xl cursor-pointer text-center font-comfortaa'>ShopWave</h1>
@@ -44,7 +50,7 @@ const ForgetPassword = () => {
                             </div>
                         </div>
 
-                        
+
 
                         <div>
                             <button
@@ -56,11 +62,11 @@ const ForgetPassword = () => {
                         </div>
                     </form>
 
-                    
+
                 </div>
             </div>
         </>
-  )
+    )
 }
 
 export default ForgetPassword;
