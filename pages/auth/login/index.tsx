@@ -8,7 +8,8 @@ import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 
 export default function LoginPage() {
-    const [data, setData] = useState({ email: "", password: "" })
+    const [data, setData] = useState({ email: "", password: "" });
+    const [processing, setProcessing] = useState(false);
     const router = useRouter();
     const [triggerShowCarts] = useLazyShowCartsQuery();
     const dispatch = useDispatch();
@@ -18,6 +19,7 @@ export default function LoginPage() {
 
     const login = async (e: any) => {
         e.preventDefault();
+        setProcessing(true);
         try {
             const response = await AxiosInstance.post('/api/auth/login', data);
             dispatch(updateAuthStatus(true));
@@ -27,6 +29,8 @@ export default function LoginPage() {
         } catch (e: any) {
             console.log(e)
             toast.error(e.response.data.message);
+        } finally {
+            setProcessing(false);
         }
     }
 
@@ -86,8 +90,9 @@ export default function LoginPage() {
                             <button
                                 type="submit"
                                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                disabled={processing}
                             >
-                                Sign in
+                                {!processing ? "Sign in" : "Please wait..."}
                             </button>
                         </div>
                     </form>

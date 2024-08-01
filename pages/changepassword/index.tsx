@@ -4,6 +4,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 const ChangePassword = () => {
+    const [processing, setProcessing] = useState(false);
     const router = useRouter();
     const query = router.query;
     const token = query.token?.toString() || "";
@@ -17,9 +18,10 @@ const ChangePassword = () => {
 
     const changepassword = async (e: FormEvent<HTMLFormElement>, token: string, userId: string) => {
         e.preventDefault();
-        if(data.password !== data.cpassword){
+        if (data.password !== data.cpassword) {
             return toast.info("Password and confirm password dont't match")
         }
+        setProcessing(true);
         try {
             const response = await AxiosInstance.post("/api/user/changepassword", { password: data.password, token, userId });
             if (response.data.success) {
@@ -29,6 +31,8 @@ const ChangePassword = () => {
         } catch (error: any) {
             console.log(error)
             toast.info(error.response.data.message)
+        } finally {
+            setProcessing(false);
         }
 
     }
@@ -84,8 +88,9 @@ const ChangePassword = () => {
                             <button
                                 type="submit"
                                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                disabled={true}
                             >
-                                Change Password
+                                {!processing ? "Change Password" : "Please wait..."}
                             </button>
                         </div>
                     </form>

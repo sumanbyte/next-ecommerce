@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 
 const ForgetPassword = () => {
     const [data, setData] = useState({ email: '' });
+    const [processing, setProcessing] = useState(false);
 
     const onChange = (e: any) => {
         setData({ ...data, [e.target.name]: e.target.value })
@@ -11,15 +12,18 @@ const ForgetPassword = () => {
 
     const forgetpassword = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setProcessing(true);
         try {
             const response = await AxiosInstance.post("/api/user/forgetpassword", { email: data.email });
             if (response.data.success) {
                 toast.success(response.data.message);
                 setData({ email: "" });
             }
-        } catch (error:any) {
+        } catch (error: any) {
             console.log(error);
             toast.info(error.response.data.message)
+        } finally {
+            setProcessing(false);
         }
     }
     return (
@@ -56,8 +60,9 @@ const ForgetPassword = () => {
                             <button
                                 type="submit"
                                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                disabled={processing}
                             >
-                                Request
+                                {!processing ? "Request" : "Please wait..."}
                             </button>
                         </div>
                     </form>

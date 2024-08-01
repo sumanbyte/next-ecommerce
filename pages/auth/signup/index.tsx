@@ -1,18 +1,16 @@
 "use client";
 import AxiosInstance from "@/lib/AxiosInstance";
 import { useAddToCartsMutation } from "@/redux/apis/cartApiSlice";
-import { updateAuthStatus } from "@/redux/entities/auth";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
-import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 
 
 export default function SignupPage() {
     const [data, setData] = useState({ name: "", email: "", password: "" });
+    const [processing, setProcessing] = useState(false);
     const router = useRouter();
-    const dispatch = useDispatch();
     const [addToCarts] = useAddToCartsMutation();
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         setData({ ...data, [e.target.name]: e.target.value })
@@ -20,13 +18,13 @@ export default function SignupPage() {
 
     const signup = async (e: any) => {
         e.preventDefault();
-        
+        setProcessing(true);
         try {
             const response = await AxiosInstance.post('/api/auth/signup', data);
 
-            if(sessionStorage.getItem("cartItems")){
+            if (sessionStorage.getItem("cartItems")) {
                 let items = JSON.parse(sessionStorage.getItem("cartItems")!);
-                if(items.length > 0){
+                if (items.length > 0) {
                     addToCarts(items);
                     sessionStorage.removeItem("cartItems");
                 }
@@ -34,16 +32,18 @@ export default function SignupPage() {
 
             console.log(response.data)
 
-            if(response.data.success){
+            if (response.data.success) {
                 sessionStorage.setItem("email", JSON.stringify(data.email));
                 router.push("/auth/verification")
                 toast.success(response.data.message);
-            }else{
+            } else {
                 toast.info("Some error occured.")
             }
 
         } catch (e: any) {
             toast.error(e.response.data.message);
+        } finally {
+            setProcessing(false);
         }
     }
 
@@ -118,8 +118,9 @@ export default function SignupPage() {
                         <button
                             type="submit"
                             className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                            disabled={processing}
                         >
-                            Sign up
+                            {!processing ? "Sign up" : "Please wait..."}
                         </button>
                     </div>
                 </form>
