@@ -5,9 +5,12 @@ import {
   useUpdateCartMutation,
 } from '@/redux/apis/cartApiSlice';
 import { MdDelete } from "react-icons/md";
+import { useSelector } from 'react-redux';
 
 const CheckoutPage: React.FC = () => {
   const { data: cartItems, isLoading, error } = useShowCartsQuery(undefined);
+  const navbarState = useSelector((state:any) => state.navbar);
+  console.log(navbarState)
 
   const [updateCart] = useUpdateCartMutation();
   const [deleteFromCart] = useDeleteFromCartMutation();
@@ -27,8 +30,8 @@ const CheckoutPage: React.FC = () => {
     <div className='max-w-7xl m-auto'>
       <div className='mx-9'>
         <h1 className='py-5 text-3xl'>Checkout <span className='text-primary-600'>Page</span></h1>
-        <div>
-          <div className='bg-white grid grid-cols-[2fr_1fr_1fr_1fr_1fr] justify-items-center py-5 mb-5'>
+        <div className='hidden lg:block'>
+          <div className='bg-white grid grid-cols-[2fr_1fr_1fr_1fr_1fr] justify-items-center py-5 mb-5 '>
             <p>Product</p>
             <p>Price</p>
             <p>Quantity</p>
@@ -74,6 +77,9 @@ const CheckoutPage: React.FC = () => {
             }, 0).toFixed(2)}</p>
             <p></p>
           </div>
+        </div>
+        <div className="block lg:hidden">
+          <h1>heehe</h1>
         </div>
       </div>
     </div>
