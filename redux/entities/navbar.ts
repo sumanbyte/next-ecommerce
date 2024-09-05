@@ -30,7 +30,7 @@ const navbar = createSlice({
             cart: false,
             selectedText: action.payload.selectedText,
             hasMobile: action.payload.hasMobile,
-            mobilemenu: false
+            mobilemenu: action.payload.hasMobile || false
           };
         case "2":
           return {
@@ -45,7 +45,7 @@ const navbar = createSlice({
             cart: false,
             selectedText: action.payload.selectedText,
             hasMobile: action.payload.hasMobile,
-            mobilemenu: false
+            mobilemenu: action.payload.hasMobile || false
           };
         case "3":
           return {
@@ -60,7 +60,7 @@ const navbar = createSlice({
             cart: false,
             selectedText: action.payload.selectedText,
             hasMobile: action.payload.hasMobile,
-            mobilemenu: false
+            mobilemenu: action.payload.hasMobile || false
           };
         case "4":
           return {
@@ -75,7 +75,7 @@ const navbar = createSlice({
             cart: false,
             selectedText: action.payload.selectedText,
             hasMobile: action.payload.hasMobile,
-            mobilemenu: false
+            mobilemenu: action.payload.hasMobile || false
           };
         case "5":
           return {
@@ -90,7 +90,7 @@ const navbar = createSlice({
             cart: false,
             selectedText: action.payload.selectedText,
             hasMobile: action.payload.hasMobile,
-            mobilemenu: false
+            mobilemenu: action.payload.hasMobile || false
           };
         case "6":
           return {
@@ -105,7 +105,7 @@ const navbar = createSlice({
             cart: false,
             selectedText: action.payload.selectedText,
             hasMobile: action.payload.hasMobile,
-            mobilemenu: false
+            mobilemenu: action.payload.hasMobile || false
           };
         case "7":
           return {

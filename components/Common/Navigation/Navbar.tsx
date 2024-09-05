@@ -87,7 +87,6 @@ export default function Navbar() {
             dispatch(changeNav({ type: 0 }));
         }
     }
-
     return (
         <>
             <header onMouseLeave={modalLeaveState} className=' bg-primary-500 m-auto'>
@@ -121,6 +120,7 @@ export default function Navbar() {
                             <Category type='4' text='deals_and_offers' state={navbarState.deals_and_offers} />
                             <Category type='5' text='support' state={navbarState.support} />
                             <Category type='6' text='options' state={navbarState.options} />
+
                         </div>
 
                         <div>
@@ -253,6 +253,11 @@ export default function Navbar() {
                                 </div>
                             }
                         </div>
+                    </div>
+
+                    <div className="menu flex mx-2 my-5 gap-2">
+                        <Link href={"/auth/login"} className='px-2 py-1 bg-primary-700'>Login</Link>
+                        <Link href={"/auth/signup"} className='px-2 py-1 bg-secondary-700'>Signup</Link>
                     </div>
 
                 </div>
