@@ -125,13 +125,13 @@ export default function Navbar() {
 
                         <div>
                             <div className='flex gap-7 items-center'>
-                                <div className='flex items-center gap-5 cursor-pointer hover:text-red-700 duration-500' onClick={() => {
+                                <div className='flex items-center gap-5 cursor-pointer hover:text-red-700 duration-500 mr-2' onClick={() => {
                                     dispatch(changeNav({ type: '7', selectedText: 'search' }))
                                 }}>
                                     <FiSearch className='text-2xl font-bold' />
                                     <span className='text-sm font-light font-montserrat hidden lg:block'>Search</span>
                                 </div>
-                                <div className='hover:text-red-700 duration-500 cursor-pointer hidden md:block'>
+                                <div className='hover:text-red-700 duration-500 cursor-pointer hidden lg:block'>
                                     {
                                         auth.isLoading && !auth.isAuthenticated ? <Spinner /> :
                                             auth.isAuthenticated && !auth.isLoading ? <div onClick={logout} title="Logout">
@@ -144,7 +144,7 @@ export default function Navbar() {
                                 </div>
                                 {
                                     auth.isAuthenticated &&
-                                    <div className='hover:text-red-700 duration-500 cursor-pointer mr-4' onClick={() => {
+                                    <div className='hover:text-red-700 duration-500 cursor-pointer mr-4 hidden lg:block' onClick={() => {
                                         dispatch(changeNav({ type: '8' }))
                                     }}>
                                         <div className='relative'>
@@ -256,9 +256,28 @@ export default function Navbar() {
                     </div>
 
                     <div className="menu flex mx-2 my-5 gap-2">
-                        <Link href={"/auth/login"} className='px-2 py-1 bg-primary-700'>Login</Link>
-                        <Link href={"/auth/signup"} className='px-2 py-1 bg-secondary-700'>Signup</Link>
+                        {auth.isLoading && !auth.isAuthenticated ? <Spinner /> : !auth.isAuthenticated ?
+                            <>   <Link href={"/auth/login"} className='px-2 py-1 bg-primary-700'>Login</Link>
+                                <Link href={"/auth/signup"} className='px-2 py-1 bg-secondary-700'>Signup</Link>
+                            </>
+                            : <>
+                                <div onClick={() => {
+                                    dispatch(changeNav({ type: '8' }))
+                                }} className='px-3 py-2 bg-secondary-800 flex items-center justify-center gap-3 transition-transform hover:scale-105 active:scale-95'>
+                                    <p className='text-sm'>View Carts</p>
+
+                                    <div className='relative'>
+                                        <BiCart className='text-sm font-bold' />
+                                        <span className='absolute -top-3 -right-2 text-sm'>{!isLoading && !error ? data.length : 0}</span>
+
+                                    </div>
+                                </div>
+                                <Link href={"#"} className='px-2 py-2 bg-red-500 text-sm transition-transform hover:scale-105 active:scale-95' onClick={logout}>Logout</Link>
+                            </>
+                        }
                     </div>
+
+
 
                 </div>
             </div>

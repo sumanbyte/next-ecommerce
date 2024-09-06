@@ -36,7 +36,7 @@ export default function Cart() {
                 {
                     auth.isAuthenticated ?
                         <Link href={'/checkout'}>
-                            <button className='bg-primary-700 hover:bg-primary-800 hover:scale-105 active:scale-95 transition text-white px-5 py-2'
+                            <button className='bg-primary-700 hover:bg-primary-800 hover:scale-105 active:scale-95 transition text-white px-2 py-1 text-sm lg:text-xl lg:px-5 lg:py-2 '
                                 onClick={() => { dispatch(changeNav({ type: '8' })) }}
 
                             >Checkout</button>
