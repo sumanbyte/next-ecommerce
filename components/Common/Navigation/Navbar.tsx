@@ -164,7 +164,7 @@ export default function Navbar() {
                 <Cart />
 
             </header>
-            <div className={`bg-primary-400 text-primary-100 w-[300px] h-mobileNav overflow-scroll absolute z-10 ${navbarState.mobilemenu ? 'block' : 'hidden'}`}>
+            <div className={`bg-primary-400 text-primary-100 w-[300px] h-mobileNav overflow-scroll absolute z-10 transform transition duration-500 ${navbarState.mobilemenu ? 'translate-x-0' : '-translate-x-full'}`}>
                 <div className="menus" >
 
                     <div className="menu flex flex-col mx-2 my-5">
