@@ -133,7 +133,7 @@ export default function Navbar() {
                                 </div>
                                 <div className='hover:text-red-700 duration-500 cursor-pointer hidden lg:block'>
                                     {
-                                        auth.isLoading && !auth.isAuthenticated ? <Spinner /> :
+                                        auth.isLoading && !auth.isAuthenticated ? <Spinner size={24} /> :
                                             auth.isAuthenticated && !auth.isLoading ? <div onClick={logout} title="Logout">
                                                 <IoLogOutOutline className='text-2xl font-bold' />
                                             </div> :
@@ -256,7 +256,7 @@ export default function Navbar() {
                     </div>
 
                     <div className="menu flex mx-2 my-5 gap-2">
-                        {auth.isLoading && !auth.isAuthenticated ? <Spinner /> : !auth.isAuthenticated ?
+                        {auth.isLoading && !auth.isAuthenticated ? <Spinner size={24} /> : !auth.isAuthenticated ?
                             <>   <Link href={"/auth/login"} className='px-2 py-1 bg-primary-700'>Login</Link>
                                 <Link href={"/auth/signup"} className='px-2 py-1 bg-secondary-700'>Signup</Link>
                             </>

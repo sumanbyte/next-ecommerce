@@ -11,7 +11,7 @@ export default function Features() {
                         Discover why our online store is the perfect choice for your shopping needs.
                     </p>
                 </div>
-                <div className="flex md:flex-row flex-col justify-center items-center gap-10 md:px-5">
+                <div className="flex md:flex-row flex-col gap-10 md:px-5">
                     <Feature Icon={ShoppingCart} title="Wider Selection" description="Explore a vast range of products, from fashion to electronics and more." />
 
                     <Feature Icon={SecurePayments} title="Secure Payments" description="Shop with confidence, knowing your transactions are safe and secure." />
