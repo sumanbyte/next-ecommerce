@@ -90,7 +90,7 @@ export default function Navbar() {
     return (
         <>
             <header onMouseLeave={modalLeaveState} className=' bg-primary-500 m-auto'>
-                <nav className="max-w-7xl m-auto w-full h-14 text-primary-100 flex items-center justify-between lg:justify-normal">
+                <nav className="max-w-7xl m-auto w-full h-14 text-primary-100 flex items-center justify-between lg:justify-normal px-4">
                     <div className='block lg:hidden w-1/3'>
                         {
                             !navbarState.mobilemenu ?
@@ -107,11 +107,11 @@ export default function Navbar() {
                     </div>
                     <div className="font-comfortaa">
                         <Link href={'/'}>
-                            <h1 className='font-bold text-2xl cursor-pointer ml-0 lg:ml-8 text-center lg:text-left'>ShopWave</h1>
+                            <h1 className='font-bold text-2xl cursor-pointer text-center lg:text-left'>ShopWave</h1>
                         </Link>
                     </div>
 
-                    <div className='w-1/3 lg:w-full flex justify-end lg:justify-between ml-0 mr-0 lg:ml-6 lg:mr-8'>
+                    <div className='w-1/3 lg:w-full flex justify-end lg:justify-between ml-0 mr-0 lg:ml-6'>
                         <div className='gap-2 lg:gap-3  font-size text-base font-medium font-chakrapetch hidden lg:flex'>
 
                             <Category type='1' text='categories' state={navbarState.categories} />

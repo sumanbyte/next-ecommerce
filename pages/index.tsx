@@ -11,9 +11,9 @@ export default function Home() {
       <title>ShopWave - Shop for fun...</title>
     </Head>
       <Hero />
-      <Products />
+      {/* <Products /> */}
       <Features />
-      <Footer />
+      {/* <Footer /> */}
     </>
   )
 }
