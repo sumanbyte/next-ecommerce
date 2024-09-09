@@ -9,9 +9,9 @@ export default function Product({ product }: { product: ProductObjectInterface }
 
     return (
         
-        <div className="flex-none w-48 h-56 flex flex-col py-4 bg-white">
+        <div className="flex-none w-48 md:w-56 h-56 md:h-60 flex flex-col py-4 bg-white">
             <Link href={`/products/${product.id}`} key={product.id} className="">
-            <div className="flex-grow flex flex-col items-center justify-center h-40 w-full px-4">
+            <div className="flex-grow flex flex-col items-center justify-center h-40 md:h-44 w-full px-4">
                 <Image
                     src={product.image}
                     width={300}

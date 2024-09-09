@@ -1,8 +1,9 @@
 
 export default function FooterMain() {
 
+
     return <div className="bg-gray-700">
-        <div className="flex flex-col items-center md:items-start md:flex-row flex-wrap justify-between px-5 bg-gray-700 py-10  max-w-7xl m-auto pt-10">
+        <div className="flex flex-col items-center md:items-start md:flex-row flex-wrap justify-between px-4 bg-gray-700 py-10  max-w-7xl m-auto pt-10">
             <div className="text-white my-5">
                 <h2 className="font-medium">Shopping Services</h2>
                 <ul>
