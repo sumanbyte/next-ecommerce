@@ -11,7 +11,7 @@ export default function AllProducts({products}: {products: any}) {
     }
 
     return (
-        <div className="flex max-w-7xl m-auto flex-wrap">
+        <div className="flex gap-3 md:gap-8 flex-wrap">
             {
                 products.data?.map((product:any) => {
                     return <ProductCard key={product.id} product={product}/>

@@ -15,6 +15,9 @@ module.exports = {
       },
       height: {
         mobileNav: 'calc(100vh - 3.5rem)',
+      },
+      boxShadow: {
+        customproducts: '4px 4px 8px 0px rgba(0, 0, 0, 0.77)'
       }
     },
     colors: {
