@@ -90,7 +90,7 @@ export default function Navbar() {
     return (
         <>
             <header onMouseLeave={modalLeaveState} className=' bg-primary-500 m-auto'>
-                <nav className="max-w-7xl m-auto w-full h-14 text-primary-100 flex items-center justify-between lg:justify-normal px-4">
+                <nav className="max-w-7xl m-auto w-full h-14 text-primary-100 flex items-center justify-between lg:justify-normal px-2 md:px-4">
                     <div className='block lg:hidden w-1/3'>
                         {
                             !navbarState.mobilemenu ?

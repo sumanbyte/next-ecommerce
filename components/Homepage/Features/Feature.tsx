@@ -18,7 +18,7 @@ export default function Feature({ Icon, title, description }: { Icon: React.FC; 
                 <div className="icon w-36 m-auto">
                     <Icon />
                 </div>
-                <p className='text-sm text-justify w-72 break-words mt-2 tracking-wide leading-5'>{description}</p>
+                <p className='text-sm text-justify w-60 md:w-56 lg:w-72 break-words mt-2 tracking-wide leading-5'>{description}</p>
             </div>
         </div>
     );

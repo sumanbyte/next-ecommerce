@@ -1,6 +1,7 @@
 import Feature from "./Feature"
 
 export default function Features() {
+
     return (
         <div className="bg-secondary-800">
 
@@ -11,7 +12,7 @@ export default function Features() {
                         Discover why our online store is the perfect choice for your shopping needs.
                     </p>
                 </div>
-                <div className="flex md:flex-row justify-between flex-col gap-10 px-4">
+                <div className="flex md:flex-row justify-between flex-col gap-5 lg:gap-10 px-2 md:px-4">
                     <Feature Icon={ShoppingCart} title="Wider Selection" description="Explore a vast range of products, from fashion to electronics and more." />
 
                     <Feature Icon={SecurePayments} title="Secure Payments" description="Shop with confidence, knowing your transactions are safe and secure." />

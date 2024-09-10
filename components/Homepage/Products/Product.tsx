@@ -4,14 +4,14 @@ import Link from "next/link";
 
 export default function Product({ product }: { product: ProductObjectInterface }) {
     const { title } = product;
-    const updatedTitle = title.substring(0, 19);
+    const updatedTitle = title.substring(0, 15);
     const hasDots = updatedTitle.length < title.length ? '...' : '';
 
     return (
         
-        <div className="flex-none w-48 md:w-56 h-56 md:h-60 flex flex-col py-4 bg-white">
+        <div className="flex-none w-40 md:w-56 h-44 md:h-60 flex flex-col py-2 md:py-4 bg-white">
             <Link href={`/products/${product.id}`} key={product.id} className="">
-            <div className="flex-grow flex flex-col items-center justify-center h-40 md:h-44 w-full px-4">
+            <div className="flex-grow flex flex-col items-center justify-center h-32 md:h-44 w-full px-4">
                 <Image
                     src={product.image}
                     width={300}
@@ -21,7 +21,7 @@ export default function Product({ product }: { product: ProductObjectInterface }
                 />
             </div>
             <div className="flex-grow flex flex-col justify-end px-2 text-center">
-                <p className="text-base mt-4">{updatedTitle}{hasDots}</p>
+                <p className="text-sm mt-4">{updatedTitle}{hasDots}</p>
             </div>
         </Link>
         </div>
