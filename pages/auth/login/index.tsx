@@ -36,16 +36,15 @@ export default function LoginPage() {
 
     return (
         <>
-            <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 mt-10">
+            <div className="flex min-h-full flex-1 flex-col justify-center px-2 md:px-5  my-10">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                    <h1 className='font-bold text-2xl cursor-pointer text-center font-comfortaa'>ShopWave</h1>
-                    <h2 className="mt-5 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+                    <h2 className="text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
                         Login to your account
                     </h2>
                 </div>
 
-                <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                    <form className="space-y-6" action="#" method="POST" onSubmit={login}>
+                <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-sm">
+                    <form className="space-y-3" action="#" method="POST" onSubmit={login}>
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                                 Email address
@@ -97,7 +96,7 @@ export default function LoginPage() {
                         </div>
                     </form>
 
-                    <p className="mt-10 text-center text-sm text-gray-500">
+                    <p className="mt-3 text-center text-sm text-gray-500">
                         Don&apos;t have account?{' '}
                         <Link href="/auth/signup" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
                             Signup

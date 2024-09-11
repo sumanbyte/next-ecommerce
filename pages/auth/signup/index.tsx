@@ -48,16 +48,15 @@ export default function SignupPage() {
     }
 
     return (
-        <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 mt-10">
+        <div className="flex min-h-full flex-1 flex-col justify-center px-2 md:px-4 my-10">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                <h1 className='font-bold text-2xl cursor-pointer text-center font-comfortaa'>ShopWave</h1>
-                <h2 className="mt-5 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+                <h2 className="text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
                     Sign up to your account
                 </h2>
             </div>
 
-            <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                <form className="space-y-6" action="#" onSubmit={signup} method="POST">
+            <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-sm">
+                <form className="space-y-3" action="#" onSubmit={signup} method="POST">
                     <div>
                         <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
                             Name
@@ -125,7 +124,7 @@ export default function SignupPage() {
                     </div>
                 </form>
 
-                <p className="mt-10 text-center text-sm text-gray-500">
+                <p className="mt-3 text-center text-sm text-gray-500">
                     Already have an account?{' '}
                     <Link href="/auth/login" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
                         Login

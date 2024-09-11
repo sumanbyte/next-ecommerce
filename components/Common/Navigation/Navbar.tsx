@@ -94,12 +94,12 @@ export default function Navbar() {
                     <div className='block lg:hidden w-1/3'>
                         {
                             !navbarState.mobilemenu ?
-                                <AiOutlineMenu className='text-xl mx-2' onClick={() => {
+                                <AiOutlineMenu className='text-xl' onClick={() => {
                                     dispatch(changeNav({ type: "9" }))
 
                                 }} />
                                 :
-                                <RxCross1 className='text-xl mx-2' onClick={() => {
+                                <RxCross1 className='text-xl' onClick={() => {
                                     dispatch(changeNav({ type: "9" }))
 
                                 }} />
@@ -125,7 +125,7 @@ export default function Navbar() {
 
                         <div>
                             <div className='flex gap-7 items-center'>
-                                <div className='flex items-center gap-5 cursor-pointer hover:text-red-700 duration-500 mr-2' onClick={() => {
+                                <div className='flex items-center gap-5 cursor-pointer hover:text-red-700 duration-500' onClick={() => {
                                     dispatch(changeNav({ type: '7', selectedText: 'search' }))
                                 }}>
                                     <FiSearch className='text-xl font-bold' />
