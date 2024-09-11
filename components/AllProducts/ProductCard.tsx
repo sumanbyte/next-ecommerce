@@ -4,7 +4,7 @@ import Link from "next/link";
 import { IoIosStar, IoIosStarHalf, IoIosStarOutline } from "react-icons/io";
 
 export default function ProductCard({ product }: { product: ProductObjectInterface }) {
-    return <div className="w-60 h-72 bg-white p-4 shadow-customproducts">
+    return <div className="w-full h-full bg-white p-2 md:p-4 shadow-customproducts transform hover:-translate-y-2 duration-500 ease-linear">
         <Link
             href={{
                 pathname: '/products/[productid]',

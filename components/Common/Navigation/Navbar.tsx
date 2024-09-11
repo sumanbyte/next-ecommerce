@@ -128,7 +128,7 @@ export default function Navbar() {
                                 <div className='flex items-center gap-5 cursor-pointer hover:text-red-700 duration-500 mr-2' onClick={() => {
                                     dispatch(changeNav({ type: '7', selectedText: 'search' }))
                                 }}>
-                                    <FiSearch className='text-2xl font-bold' />
+                                    <FiSearch className='text-xl font-bold' />
                                     <span className='text-sm font-light font-montserrat hidden lg:block'>Search</span>
                                 </div>
                                 <div className='hover:text-red-700 duration-500 cursor-pointer hidden lg:block'>

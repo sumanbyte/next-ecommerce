@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 import Navbar from '@/components/Common/Navigation/Navbar'
 import { ToastContainer, Bounce } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
+import Footer from '@/components/Common/Footer/Footer'
 
 export default function App({ Component, pageProps }: AppProps) {
 
@@ -12,6 +13,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <Provider store={store}>
       <Navbar />
       <Component {...pageProps} />
+      <Footer />
       <ToastContainer
         position="top-right"
         autoClose={5000}
