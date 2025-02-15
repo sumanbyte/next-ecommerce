@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import HeroContent from './HeroContent'
-import Image from 'next/image'
+import Image from 'next/image';
 
 const Hero = () => {
   const myObj = useMemo(() => {
