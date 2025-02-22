@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import Head from "next/head";
 
 export default function LoginPage() {
   const [data, setData] = useState({ email: "", password: "" });
@@ -37,6 +38,9 @@ export default function LoginPage() {
 
   return (
     <>
+      <Head>
+        <title>Signup - ShopWave</title>
+      </Head>
       <div className="flex min-h-[70vh] flex-1 flex-col justify-center px-2 md:px-5  my-10">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">

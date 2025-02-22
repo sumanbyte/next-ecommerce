@@ -8,17 +8,17 @@
   grid-template-columns: 1fr 4fr; /* Adjust the column widths as needed */
 }
 
-.custom-card{
+.custom-card {
   text-align: start;
 }
 
-@media screen and (max-width: 367px){
-  .custom-card{
+@media screen and (max-width: 367px) {
+  .custom-card {
     text-align: center;
   }
 }
 
-.custom-grid-layout{
+.custom-grid-layout {
   display: grid;
   place-items: center;
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
@@ -88,4 +88,8 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.container {
+  @apply max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8;
 }
