@@ -1,4 +1,10 @@
 import { Html, Head, Main, NextScript } from "next/document";
+import {
+  montserrat,
+  chakra_petch,
+  comfortaa,
+  merriweather,
+} from "@/utils/fonts";
 
 export default function Document() {
   return (
@@ -43,7 +49,9 @@ export default function Document() {
         {/* Web App Manifest */}
         <link rel="manifest" href="/site.webmanifest" />
       </Head>
-      <body className="bg-[#E4E5E4]">
+      <body
+        className={`bg-[#E4E5E4] ${montserrat.variable} ${chakra_petch.variable} ${comfortaa.variable} ${merriweather.variable}`}
+      >
         <Main />
         <NextScript />
       </body>

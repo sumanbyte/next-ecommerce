@@ -1,8 +1,13 @@
-@import url("https://fonts.googleapis.com/css2?family=Chakra+Petch&family=Comfortaa&family=Merriweather:wght@900&family=Montserrat&display=swap");
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --font-montserrat: var(--font-montserrat);
+  --font-chakra-petch: var(--font-chakra-petch);
+  --font-comfortaa: var(--font-comfortaa);
+  --font-merriweather: var(--font-merriweather);
+}
 
 .grid-col-checkout {
   grid-template-columns: 1fr 4fr; /* Adjust the column widths as needed */
