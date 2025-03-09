@@ -1,36 +1,36 @@
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
 import { ProductObjectInterface } from "@/components/Homepage/Products/Products";
-import IndividualProduct from '@/components/IndividualProduct/Product';
+import IndividualProduct from "@/components/IndividualProduct/Product";
 import { useGetProductsQuery } from "@/redux/apis/productsApiSlice";
 
 export default function ProductPage() {
-    const pathname: any = usePathname();
-    const {data: products, error, isLoading}= useGetProductsQuery({});
-    
-    const product: ProductObjectInterface | undefined = useMemo(() => {
-        if (pathname) {
-            const number = Number(pathname.split('/')[2]);
-            if(products && products.length > 0)
-            return products.find((product:any) => product.id === number)
-        }
-    }, [products, pathname])
+  const pathname: any = usePathname();
+  const { data: products, error, isLoading } = useGetProductsQuery({});
 
-    if (error) {
-        return <p className="text-center">Some Error Occured {products.error}</p>
+  const product: ProductObjectInterface | undefined = useMemo(() => {
+    if (pathname) {
+      const number = Number(pathname.split("/")[2]);
+      if (products && products.length > 0)
+        return products.find((product: any) => product.id === number);
     }
+  }, [products, pathname]);
 
-    if (isLoading) {
-        return <p className="text-center">Loading...</p>
-    }
+  if (error) {
+    return <p className="text-center">Some Error Occured {products.error}</p>;
+  }
 
-    return <div className="max-w-7xl mx-auto mt-10">
-        {
-            product && <>
+  if (isLoading) {
+    return <p className="text-center">Loading...</p>;
+  }
 
-                <IndividualProduct product={{ ...product, quantity: 1 }} />
-
-            </>
-        }
+  return (
+    <div className="max-w-7xl mx-auto py-10 md:py-20 min-h-[calc(100vh-100px)]">
+      {product && (
+        <div>
+          <IndividualProduct product={{ ...product, quantity: 1 }} />
+        </div>
+      )}
     </div>
+  );
 }

@@ -12,8 +12,10 @@ const HeroContent = (props: PropType) => {
     <div
       className={`absolute h-full w-full py-10 ${props.textColor} font-montserrat`}
     >
-      <div className="container">
-        <h1 className="text-4xl md:text-5xl font-extrabold ">{props.title}</h1>
+      <div className="container ">
+        <h1 className="text-4xl md:text-5xl font-bold leading-10">
+          {props.title}
+        </h1>
         <p className="text-xl md:text-3xl my-1 md:my-2">Festive Sale !</p>
         <p className="font-extrabold my-1 md:my-2 text-sm md:text-2xl">
           Up to 60% Discount
